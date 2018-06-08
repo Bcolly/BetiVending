@@ -1,0 +1,9 @@
+-Cuando en ADD sale la lista de productos que coincide con lo buscado enlazarlo para rellenar.
+-Deberia aparecer en la ventana emergente en nombre de la maquina y la seleccion que estamos modificando.
+-No puedo añadir Mini Chips Ahoy en A52 de maq 3. Tampoco B28 Sandwich Txaka roja. Puede que el problema sea que el producto esta duplicado en la base de datos de productos. el caso es que produce un error "No se puede la consulta1".
+ Tampoco puedo añadir W34 Pantera Rosa, y no se por que. Tampoco B36 seguramente por duplicado.
+-Otro problema a la hora de configurar la maquina es que en Snacks_2, por ejemplo no aparecen algunas selecciones. Parece que es debido a que hay un ERROR CRC a la hora de recibir el DEX. Quiza habria que tener la posibilidad de meter esas selecciones a mano.
+-Otro problema. No se por que se repite V44 ¿?.
+-Despues de ADD, al cerrar la ventana emergente deberia de actualizarse el listado.
+-A la hora de cambiar un producto, nos deberia dejar por defecto la cantidad maxima anterior, aunque despues se pueda cambiar.
+-En las maquinas el boton HIDE tiene que quedar fuera de la ventana de productos.

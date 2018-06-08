@@ -1,0 +1,35 @@
+body {
+	padding-top: 50px;
+	padding-bottom: 20px;
+}
+
+#select {
+	text-align: center;
+	padding-bottom: 30px;
+}
+
+/*input[type=text] {
+    width: 100%;
+}*/
+
+select {
+    #width: 50%;
+	height: 60%;
+}
+
+input[type=text]:focus {
+    border: 3px solid #6ac4ff;
+}
+
+.flecha {
+	text-align: center;
+}
+
+#lines {
+	overflow-y: scroll; 
+	height: 500px;
+}
+
+#options {
+	margin-bottom: 20px;
+}

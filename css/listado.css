@@ -1,0 +1,149 @@
+.sombreado{
+background-color: rgb(232, 232, 228);
+border: 1px solid rgb(209, 209, 209);
+/*margin: 10px 10px 10px 10px;*/
+padding: 3px 10px 3px 10px;
+font-weight: bold;
+text-align: left;
+font-family: sans-serif;
+font-size: 12px;
+	}
+	
+.listado td.celdaprimera {
+background-color: rgb(232, 232, 228);
+border-top: 1px solid rgb(209, 209, 209);
+margin: 10px 10px 10px 10px;
+font-weight: bold;
+}
+
+.listado td.aviso {
+color: rgb(255, 204, 0);
+font-weight: bold;
+}
+
+.listado td.error {
+color: rgb(204, 0, 0);
+font-weight: bold;
+}
+
+.listado td.resaltado {
+color: rgb(0, 0, 0);
+font-weight: bold;
+}
+
+.listado td.error {
+color: rgb(204, 0, 0);
+font-weight: bold;
+}
+
+.listado td {
+background-color: rgb(255, 255, 255);
+border-bottom: 1px solid rgb(209, 209, 209);
+color: rgb(0, 0, 0);
+border-radius: 0px;
+padding: 3px 10px 3px 10px;
+/*margin: 100px;*/
+text-align: left;
+font-family: sans-serif;
+font-size: 12px;
+font-weight: normal;
+}
+
+.listado{
+	width: 640px;
+}
+
+.ventana{
+	width: 100%;
+}
+
+#ventana{
+	width: 640px;
+}
+
+#tabla1{
+   border: 1px solid #FF0000;
+   background-color: #FFFFFF;   
+   width: 640px;
+   height: 275px;
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   margin-left: -320px;
+   margin-top: -137px;
+}
+#cabtab1{
+   background-color: #FF0000;
+   font-weight: bold;
+   color: #FFFFFF;
+   padding: 2 2 2 2px;
+}
+#cuerpotab1{
+   font-size: 15px;
+}
+
+#cuerpotab1izda{
+   padding: 0 0 0 0px;
+   /*background-color: #ffffcc;*/
+   font-size: 20px;
+   float: left;
+
+}
+
+#cuerpotab1dcha{
+
+   /*background-color: #ffffcc;*/
+   margin-left: 377px;
+   font-size: 15px;
+   width: 300px;
+
+
+}
+
+.importante {
+text-align: right;
+font-family: sans-serif;
+font-size: 15px;
+font-weight: bold;
+padding: 10 0 0 0px;
+}
+
+.importante td {
+padding: 10 0 0 0px;
+width: 253px;
+}
+
+.sarrera{
+width:253;
+}
+
+.error{
+background-color: #FF0000;
+color: #FFFFFF;
+text-align: center;
+font-family: sans-serif;
+font-size: 15px;
+font-weight: bold;
+padding: 0 0 0 0px;
+width:253;
+}
+
+.tablacentro{
+vertical-align: middle;
+font-size: 30px;
+}
+
+.totallinea{
+width:500px;
+}
+
+.menus{
+background-color: rgb(232, 232, 228);
+color: #0000FF;
+text-align: center;
+font-family: sans-serif;
+font-size: 15px;
+font-weight: normal;
+padding: 5 5 5 5px;
+margin: 0 5 0 0px;
+}
