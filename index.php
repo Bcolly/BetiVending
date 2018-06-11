@@ -1,4 +1,4 @@
-<?php require('language.php'); ?>
+<?php require('lang/language.php'); ?>
 <!doctype html>
 <html class="no-js" lang=""> <!--<![endif]-->
     <head>
@@ -31,29 +31,10 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			  </button>
-                          <a class="navbar-brand" href="#">myVENDING</a>
+              <a class="navbar-brand" href="#">myVENDING</a>
 			</div>
 			<div class="navbar-form navbar-right">
-				<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
-					<?php echo __('Language', $lang) ?> <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-					<li role="presentation">
-						<a role="menuitem" tabindex="-1" onclick="window.location='cambia_lang.php?lang=en&url='+window.location;">
-							<img src="img/flags/16/United Kingdom(Great Britain).png" alt="United Kingdom(Great Britain)"/>
-						English</a>
-					</li>
-					<li role="presentation">
-						<a role="menuitem" tabindex="-1" onclick="window.location='cambia_lang.php?lang=es&url='+window.location;">
-							<img src="img/flags/16/Spain.png" alt="Spain"/>
-						Español</a>
-					</li>
-					<li role="presentation">
-						<a role="menuitem" tabindex="-1" onclick="window.location='cambia_lang.php?lang=eu&url='+window.location;">
-							<img src="img/flags/16/Basque Country.png" alt="Basque Country"/>
-						Euskera</a>
-					</li>
-				</ul>
+				<?php require('lang/lenguajehtml.php'); ?>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<form class="navbar-form navbar-right" role="form" action="control.php" method="POST">

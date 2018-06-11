@@ -19,7 +19,7 @@ switch($ACC) {
 
 //vemos si el usuario y contraseña es váildo
 function comprobar_email($email){ 
-   	$mail_correcto = 1; //true
+   	$mail_correcto = true;
 	
 	//comprobamos longitud y si tiene @
 	if ((strlen($email) < 6) 
@@ -35,36 +35,17 @@ function comprobar_email($email){
 				$antes_dom = substr($email,0,strlen($email) - strlen($term_dom) - 1); 
 				$caracter_ult = substr($antes_dom,strlen($antes_dom)-1,1); 
 				if ($caracter_ult == "@" || $caracter_ult == "."){ 
-					$mail_correcto = 0; //false
+					$mail_correcto = false;
 				}
 			}
 		}
 	}
-	/*
-   	if ((strlen($email) >= 6) && (substr_count($email,"@") == 1) && (substr($email,0,1) != "@") && (substr($email,strlen($email)-1,1) != "@")){ 
-      	if ((!strstr($email,"'")) && (!strstr($email,"\"")) && (!strstr($email,"\\")) && (!strstr($email,"\$")) && (!strstr($email," "))) { 
-         	//miro si tiene caracter . 
-         	if (substr_count($email,".")>= 1){ 
-            	//obtengo la terminacion del dominio 
-            	$term_dom = substr(strrchr ($email, '.'),1); 
-            	//compruebo que la terminación del dominio sea correcta 
-            	if (strlen($term_dom)>1 && strlen($term_dom)<5 && (!strstr($term_dom,"@")) ){ 
-					//compruebo que lo de antes del dominio sea correcto 
-					$antes_dom = substr($email,0,strlen($email) - strlen($term_dom) - 1); 
-					$caracter_ult = substr($antes_dom,strlen($antes_dom)-1,1); 
-					if ($caracter_ult != "@" && $caracter_ult != "."){ 
-						$mail_correcto = 1; //true
-					} 
-            	} 
-         	} 
-      	}
-   	}*/
    	return $mail_correcto;
 }
 
 function comprobar_pass($ps1, $ps2){ 
-   	$correcto = 1; //true
-	if ($ps1 != $ps2 or strlen($ps1)<5) $correcto = 0; //false
+   	$correcto = true;
+	if ($ps1 != $ps2 or strlen($ps1)<5) $correcto = false;
    	return $correcto;
 }
 
@@ -83,18 +64,18 @@ function entrar(){
 	}
 	$basededatos = null;
 	$_SESSION["autentificado"]= "NO";
-	//header ("Location: ./sarrera.php?errorusuario=SI");
+	header ("Location: index.php");
 }
 
 function desconectar(){
 	$_SESSION["autentificado"]= "NO";
 	$_SESSION["user"]= NULL;
-	header ("Location: ./index.php");
+	header ("Location: index.php");
 }
 
 function enviar(){
-	if ((comprobar_email($_POST["mail"]) == 1)
-	&&  (comprobar_pass ($_POST['psw1'], $_POST['psw2']) == 1)) {    
+	if (comprobar_email($_POST["mail"])
+	&&  comprobar_pass ($_POST['psw1'], $_POST['psw2'])) {    
 		$mail=$_POST["mail"];
 		$user=$_POST["user"];
 		$con=1;

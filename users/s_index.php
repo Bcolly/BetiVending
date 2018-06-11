@@ -1,5 +1,5 @@
 <?php
-require_once("../language.php");
+require_once("../lang/language.php");
 require_once ("seguridad.php");
 include_once ("../conexion.php");
 
@@ -85,26 +85,7 @@ $usuario=$_SESSION["user"];
 				<form class="navbar-form navbar-right" role="form" action="../control.php" method="POST">
 					<input class="btn btn-link" type='button' style='width:35px; height:35px; background-image:url("../img/settings_green.png");' /> 
 					<button type="submit" class="btn btn-success" name="ACC" value="DESCONECTAR"><?php echo __('Log out', $lang, '../') ?></button>
-					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
-						<?php echo __('Language', $lang, '../') ?> <span class="caret"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-						<li role="presentation">
-							<a role="menuitem" tabindex="-1" onclick="window.location='../cambia_lang.php?lang=en&url='+window.location;">
-								<img src="../img/flags/16/United Kingdom(Great Britain).png" alt="United Kingdom(Great Britain)"/>
-							English</a>
-						</li>
-						<li role="presentation">
-							<a role="menuitem" tabindex="-1" onclick="window.location='../cambia_lang.php?lang=es&url='+window.location;">
-								<img src="../img/flags/16/Spain.png" alt="Spain"/>
-							Español</a>
-						</li>
-						<li role="presentation">
-							<a role="menuitem" tabindex="-1" onclick="window.location='../cambia_lang.php?lang=eu&url='+window.location;">
-								<img src="../img/flags/16/Basque Country.png" alt="Basque Country"/>
-							Euskera</a>
-						</li>
-					</ul>
+					<?php require_once('../lang/lenguajehtml.php'); ?>
 				</form>
 				
 			</div><!--/.navbar-collapse -->
