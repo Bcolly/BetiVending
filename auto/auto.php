@@ -1,18 +1,5 @@
 <html><body>
 <?php
-function sumarFecha($num, $ultimo){
-  $ahora = date($ultimo);
-  $res=($num/60);
-  $div=explode('.',$res);
-  $hor=$div[0];//aqui obtienes las horas
-  $min=$num - (60*$hor);//aqui obtienes los minutos
-  $nuevafecha = strtotime ( '+'. $hor .' hour' , strtotime ( $ahora ) ) ;
-  $nuevafecha = date ( 'Y-m-d H:i:s' , $nuevafecha );
-  $nuevafecha = strtotime ( '+'. $min .' minute' , strtotime ( $nuevafecha ) ) ;
-  $nuevafecha = date ( 'Y-m-d H:i:s' , $nuevafecha );
-  return $nuevafecha;
-}
-
 $mac=$_GET["mac"];   
 #$csq=$_GET["csq"];   
 #$DEX=$_GET["DEX"];
@@ -20,13 +7,11 @@ $mac=$_GET["mac"];
 $iden=$_GET["iden"];
 $iplocal=$_GET["iplocal"];
 $ippublica=$_GET["ippublica"];  
-#include_once('../beti.conf');
-#include('../inicio.php');
-require("../conexion.php");
+require_once("../conexion.php");
 
 $dia = date("Y-m-d");
 $hora = date("H:i");
-echo "G=".$dia."<br />"; # G -> Dia 
+echo "G=".$dia."<br />";  # G -> Dia 
 echo "O=".$hora."<br />"; # O -> Hora (Orain)
 
 try{
@@ -120,3 +105,17 @@ try{
 }
 ?>
 </body></html>
+<?php 
+function sumarFecha($num, $ultimo){
+  $ahora = date($ultimo);
+  $res=($num/60);
+  $div=explode('.',$res);
+  $hor=$div[0];//aqui obtienes las horas
+  $min=$num - (60*$hor);//aqui obtienes los minutos
+  $nuevafecha = strtotime ( '+'. $hor .' hour' , strtotime ( $ahora ) ) ;
+  $nuevafecha = date ( 'Y-m-d H:i:s' , $nuevafecha );
+  $nuevafecha = strtotime ( '+'. $min .' minute' , strtotime ( $nuevafecha ) ) ;
+  $nuevafecha = date ( 'Y-m-d H:i:s' , $nuevafecha );
+  return $nuevafecha;
+}
+?>

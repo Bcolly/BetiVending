@@ -2,7 +2,7 @@
 	if (isset($_GET["idanterior"])) $idenAnterior = $_GET["idanterior"];
 	if (isset($_GET["iden"])) $iden = $_GET["iden"];
 	
-	include('../conexion.php');
+	require_once('../conexion.php');
 	
 	try{
 		$sql=$basededatos->query("SELECT * FROM v_dispositivo WHERE nombre='$iden'");
