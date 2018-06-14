@@ -1,8 +1,7 @@
-function filtro() {
+function filtro(ord) {
 	var disp = document.getElementById("dispositivo").value;
 	var zona = document.getElementById("zona").value;
-	document.getElementById("dispositivo").text = ""; //deberia vaciar los cuadros de texto
-	document.getElementById("zona").value = "";
+	
 	var res = ""
 	if (disp != "") {
 		res= res+"disp="+disp;
@@ -10,6 +9,10 @@ function filtro() {
 	if (zona != "") {
 		if (res != "") { res = res+"&"; }
 		res = res+"zona="+zona;
+	}
+	if (ord !== undefined) {
+		if (disp != "" || zona != "") { res = res+"&"; }
+		res = res+"ordb="+ord;
 	}
 	xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function(){
@@ -19,7 +22,7 @@ function filtro() {
 	};
 	//esto hay que cambiarlo en el host
 	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/tabla_dispositivos.php?"+res, true);
-	xhttp.open("GET","http://localhost/betiV/users/methods/tabla_dispositivos.php?"+res, true);
+	xhttp.open("GET","http://localhost/betiV/users/methods/tabla_dispositivos.php?js=js&"+res, true);
 	xhttp.send();
 }
 

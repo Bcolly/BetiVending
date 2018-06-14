@@ -8,7 +8,8 @@ switch($ACC) {
 		entrar();
 		break;
 	case "DESCONECTAR":
-		desconectar();
+		session_destroy(); 
+		header ("Location: index.php");
 		break;
 	case "REGISTRARSE":
 		header ("Location: index.php?ACC=REGISTRARSE");
@@ -19,7 +20,7 @@ switch($ACC) {
 
 //vemos si el usuario y contraseña es váildo
 function comprobar_email($email){ 
-   	$mail_correcto = true;
+   	$correcto = true;
 	
 	//comprobamos longitud y si tiene @
 	if ((strlen($email) < 6) 
@@ -35,12 +36,12 @@ function comprobar_email($email){
 				$antes_dom = substr($email,0,strlen($email) - strlen($term_dom) - 1); 
 				$caracter_ult = substr($antes_dom,strlen($antes_dom)-1,1); 
 				if ($caracter_ult == "@" || $caracter_ult == "."){ 
-					$mail_correcto = false;
+					$correcto = false;
 				}
 			}
 		}
 	}
-   	return $mail_correcto;
+   	return $correcto;
 }
 
 function comprobar_pass($ps1, $ps2){ 
@@ -56,20 +57,12 @@ function entrar(){
 	
 	foreach ($sql as $row) {
 		if ($_POST["user"]==$row['mail'] && $passcript==$row['passwd']){
-			$_SESSION["autentificado"]= "SI";
 			$_SESSION["user"]= $row['usuario'];
 			header ("Location: ./users/s_listadispositivos.php");
 			exit();
 		}
 	}
 	$basededatos = null;
-	$_SESSION["autentificado"]= "NO";
-	header ("Location: index.php");
-}
-
-function desconectar(){
-	$_SESSION["autentificado"]= "NO";
-	$_SESSION["user"]= NULL;
 	header ("Location: index.php");
 }
 
@@ -90,14 +83,13 @@ function enviar(){
 			execute("INSERT INTO v_user (usuario,passwd,mail) values ('$user','$psw','$mail')", $basededatos, $con);
 			$con++;
 			
-			#Entramos en el sistema
-			$_SESSION["autentificado"]= "SI";  
+			//Entramos en el sistema
 			echo "Mail: ".$mail."<br />";
 			echo "Usuario: ".$user."<br />";
-			$_SESSION["user"]= $user; #aqui habria que cambiarlo or el nombre de usuario
-			#***********************************************************
-			#Aqui hay que crear las tablas de datos de usuario
-			#***********************************************************
+			$_SESSION["user"]= $user; //aqui habria que cambiarlo or el nombre de usuario
+			//***********************************************************
+			//Aqui hay que crear las tablas de datos de usuario
+			//***********************************************************
 			header ("Location: ./users/s_index.php");   
 		}
 		$basededatos = null;

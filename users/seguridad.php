@@ -2,10 +2,10 @@
 //Inicio la sesión
 session_start();
 //COMPRUEBA QUE EL USUARIO ESTA AUTENTIFICADO
-if ($_SESSION["autentificado"] != "SI") {
-    //si no existe, envio a la página de autentificacion
+if (!$_SESSION["user"]) {
+    //si no existe, se envia a la página de autentificacion
     header("Location: ../index.php");
-    //ademas salgo de este script
+    //ademas se cierra el script
     exit();
 }
 ?> 

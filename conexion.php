@@ -1,15 +1,4 @@
 <?php
-	/*
-	//Conexion con la base de datos - deber de eliminarla cuando se se haga el cambio completo
-	try{
-		$basededatos = new PDO ($host,$usr,$pass); 
-		$basededatos->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$basededatos->exec("SET NAMES 'utf8'");
-	} catch (Exception $e){
-		echo "Conexion no disponible. Contacte con el administrador";
-		exit;
-	}
-	*/
 	//Conexion con la base de datos
 	function conectardb(){
 		//parametros local

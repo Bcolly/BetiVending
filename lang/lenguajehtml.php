@@ -5,7 +5,7 @@ require_once("language.php");
 ?>
 
 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
-	<?php echo __('Language', $lang, $esp) ?> <span class="caret"></span>
+	<?php echo __('Language', $lang, $esp) ?> <span class="caret"/>
 </button>
 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 	<li role="presentation">

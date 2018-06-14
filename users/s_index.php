@@ -4,24 +4,20 @@ require_once ("seguridad.php");
 include_once ("../conexion.php");
 
 if (isset($_GET["PAG"])) $PAG=$_GET["PAG"];
-else $PAG = NULL;
+else $PAG = null;
 if (isset($_GET["OBJ"])) $OBJ=$_GET["OBJ"];
 if (isset($_GET["ACC"])){
 	$ACC=$_GET["ACC"];
 	if ($ACC=="CERRAR"){
-		$PAG=NULL;
-		$OBJ=NULL;
+		$PAG=null;
+		$OBJ=null;
 	}
 }
-else $ACC = NULL;
+else $ACC = null;
 $usuario=$_SESSION["user"];
-?> 
+?> 	
 <!doctype html>
 <html class="no-js" lang="">
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <!--<html class="no-js" lang="">--> <!--<![endif]-->
 	<head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -47,12 +43,8 @@ $usuario=$_SESSION["user"];
         <link rel="stylesheet" href="../css/bootstrap_wizard.css">
 		<script src="../js/ajax.js"></script>
     </head>
-	
     <body>
 		<!-- MENU SUPERIOR -->
-		<!--[if lt IE 8]>
-			<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-		<![endif]-->
 		<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		  <div class="container">
 			<div class="navbar-header">
@@ -87,8 +79,7 @@ $usuario=$_SESSION["user"];
 					<button type="submit" class="btn btn-success" name="ACC" value="DESCONECTAR"><?php echo __('Log out', $lang, '../') ?></button>
 					<?php require_once('../lang/lenguajehtml.php'); ?>
 				</form>
-				
-			</div><!--/.navbar-collapse -->
+			</div>
 		  </div>
 		</nav>
 		
@@ -99,25 +90,6 @@ $usuario=$_SESSION["user"];
 			<font size=5><?php echo $usuario;?></font>
 		  </div>
 		</div>
-
+		
     <div class="container"> <!--Se cierra en s_footer.php-->
-	<?php 
-	/*switch ($PAG) {
-		case "DIS":
-			include("dispositivo.php");
-			break;
-		case "BERRI":
-			include("nuevodispositivo.php");
-			break;
-		case "PRO":
-			include("s_listaproductos.php");
-			break;
-		case "MAQ":
-			include("s_maquina.php");
-			break;
-		#aqui podria haber mas casos. Para evitar errores cualquier caso no deseado sera tratado como ningun valor
-		default:
-			include("s_listadispositivos.php");
-	} */
-	?>
 
