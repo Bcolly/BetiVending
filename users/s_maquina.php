@@ -69,9 +69,10 @@ if ($maquina != null) { ?>
 <?php
 		$basededatos=null;
 	}
-	
+
 include_once ("s_footer.php"); ?>
 <?php
+//------FUNCIONES----------
 	function comprobar_maquina($id){
 		global $basededatos, $con, $usuario;
 		$maquina = null;
@@ -85,7 +86,7 @@ include_once ("s_footer.php"); ?>
 
 	function mostrarsel($id, $sel){
 		global $lang, $basededatos, $con;
-		$productos=query("SELECT * FROM v_productos_seleccion INNER JOIN v_productos ON idproducto=id 
+		$productos=query("SELECT * FROM v_productos_seleccion INNER JOIN v_productos ON idproducto=id
 						  WHERE idmaquina=$id AND sel='$sel[sel]'", $basededatos, $con);
 		$con++;
 		if ($productos->rowCount() < 1) {
@@ -102,11 +103,11 @@ include_once ("s_footer.php"); ?>
 			</tr>
 <?php
 		} else {
-			foreach ($productos as $producto) 
+			foreach ($productos as $producto)
 				mostrarproducto($sel, $producto);
 		}
 	}
-	
+
 	function mostrarproducto($sel, $producto){
 		global $lang, $basededatos, $con;
 ?>

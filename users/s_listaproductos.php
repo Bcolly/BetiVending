@@ -1,10 +1,11 @@
 <?php require ("s_index.php"); ?>
 <?php
-$con=1
-$basededatos=conectardb();
-$productos=query("SELECT * FROM v_productos;", $basededatos, $con);
-$con++;
+	$con=1;
+	$basededatos = conectardb();
+	$productos=query("SELECT * FROM v_productos;", $basededatos, $con);
+	$con++;
 ?>
+
 	<form class="navbar-form navbar-left" role="form" method="POST">
 		<div class="form-group">
 			<label for="producto"><?php echo __('PRODUCT', $lang, '../') ?> : </label>
@@ -26,27 +27,28 @@ $con++;
 	<div data-spy="scroll" data-target=".table" id="tabla">
 		<table class="table table-striped">
 		<tr><th></th><th><?php echo __('PRODUCT', $lang, '../')?></th><th><?php echo __('FAMILY', $lang, '../')?></th><th><?php echo __('PRICE AVG', $lang, '../')?></th><th><?php echo __('ADD TO MACHINES', $lang, '../')?></th></tr>
-	<?php	
+	<?php
 		foreach($productos as $producto){
 			echo "<tr><td><img src='$producto[foto_th]'/></td>
 			<td> $producto[producto]</td>
 			<td>$producto[familia]</td>
 			<td>$producto[PVP]</td>";
 			echo "<td><p><select id='$producto[id]' class='form-control'>";
-			$maquinas=query("SELECT m.id, m.nombre FROM v_maquinas as m, v_dispositivo as d, v_user as u 
+			$maquinas=query("SELECT m.id, m.nombre FROM v_maquinas as m, v_dispositivo as d, v_user as u
 				WHERE m.dispositivoid = d.id AND d.userid = u.id AND u.usuario = 'inaki'", $basededatos, $con);
 			$con++;
 			foreach ($maquinas as $m) {
 				echo "<option value='$m[id]'>$m[nombre]</option>";
 			}
 			echo "</select></p>";
-			?> 
+			?>
 			<p><input type="button" class="btn btn-info" onclick="addtomach(<?php echo $producto['id']; ?>)" value="<?php echo __('ADD', $lang, '../')?>" /></p>
 			<?php
 			echo "</td></tr>";
 		}
 		$basededatos = null; #cerramos la conexión
-	 ?>	
+	 ?>
 		</table>
     </div>
+
 <?php require ("s_footer.php"); ?>
