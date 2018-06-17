@@ -16,7 +16,7 @@ require_once("language.php");
 	<li role="presentation">
 		<a role="menuitem" tabindex="-1" onclick="window.location='<?php echo $esp; ?>lang/cambia_lang.php?lang=es&url='+window.location;">
 		<img src="<?php echo $esp; ?>img/flags/16/Spain.png" alt="Spain"/>
-		Español</a>
+		Espaï¿½ol</a>
 	</li>
 	<li role="presentation">
 		<a role="menuitem" tabindex="-1" onclick="window.location='<?php echo $esp; ?>lang/cambia_lang.php?lang=eu&url='+window.location;">

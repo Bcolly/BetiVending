@@ -12,7 +12,7 @@
 		$pass="betiV-2013";
 		*/
 		try{
-			$basededatos = new PDO ($host,$usr,$pass); 
+			$basededatos = new PDO ($host,$usr,$pass);
 			$basededatos->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$basededatos->exec("SET NAMES 'utf8'");
 		} catch (Exception $e){
@@ -21,7 +21,7 @@
 		}
 		return $basededatos;
 	}
-	
+
 	function query($q, $db, $con){
 		try{
 			$response = $db->query($q);
@@ -31,12 +31,12 @@
 		}
 		return $response;
 	}
-	
-	function exectute($q, $db, $con){
+
+	function execute($q, $db, $con){
 		try{
-			$query = $basededatos->prepare($q);
+			$query = $db->prepare($q);
 			$query->execute();
-		} 
+		}
 		catch (exception $e) {
 			echo "No se puede la consulta ".$con;
 			exit;

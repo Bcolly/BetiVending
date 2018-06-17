@@ -1,4 +1,4 @@
-var c = document.getElementById("myChart");
+var c = document.getElementById("grafico");
 var ctx = c.getContext("2d");
 	ctx.fillStyle = 'grey';
 	ctx.fillRect(0, 0, 300, 300);
