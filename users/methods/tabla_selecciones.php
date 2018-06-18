@@ -1,27 +1,27 @@
 <?php
 		require_once ("../../conexion.php");
-		require_once("../../language.php");
+		require_once("../../lang/language.php");
 		$id=$_GET["id"];
-		
+
 		if (isset($_GET["ocultos"])) {
 			if ($_GET["ocultos"]=="true") $ocultos="";
 			else $ocultos=" AND visible_log=1";
 		}
-		
-		if (isset($_GET["sel"]) && !isset($_GET["prod"])) 
+
+		if (isset($_GET["sel"]) && !isset($_GET["prod"]))
 			$query="SELECT sel,uDEXprecio,visible_log,max FROM v_seleccion WHERE idmaquina=$id AND sel LIKE '%$_GET[sel]%'".$ocultos;
-		
+
 		elseif (!isset($_GET["sel"]) && isset($_GET["prod"]))
-			$query="SELECT sel,uDEXprecio,visible_log,max FROM (v_productos_seleccion INNER JOIN v_productos ON idproducto=id) NATURAL JOIN v_seleccion 
+			$query="SELECT sel,uDEXprecio,visible_log,max FROM (v_productos_seleccion INNER JOIN v_productos ON idproducto=id) NATURAL JOIN v_seleccion
 			WHERE idmaquina=$id AND producto LIKE '%$_GET[prod]%'".$ocultos;
-			
+
 		elseif (isset($_GET["sel"]) && isset($_GET["prod"]))
-			$query="SELECT sel,uDEXprecio,visible_log,max FROM (v_productos_seleccion INNER JOIN v_productos ON idproducto=id) NATURAL JOIN v_seleccion 
+			$query="SELECT sel,uDEXprecio,visible_log,max FROM (v_productos_seleccion INNER JOIN v_productos ON idproducto=id) NATURAL JOIN v_seleccion
 			WHERE idmaquina=$id AND producto LIKE '%$_GET[prod]%' AND sel LIKE '%$_GET[sel]%'".$ocultos;
-			
-		else 
+
+		else
 			$query="SELECT sel,uDEXprecio,visible_log,max FROM v_seleccion WHERE idmaquina=$id".$ocultos;
-		
+
 		$con=1;
 		$basededatos=conectardb();
 		$sql=query($query, $basededatos, $con);
@@ -31,27 +31,27 @@
 		<tr><th><input type="button" class="btn btn-primary" onclick="ocultar(<?php echo $id; ?>)" value="<?php echo __('HIDE', $lang, '../'); ?>">
 		</input></th><th><?php echo __('Selection', $lang, '../'); ?></th><th><?php echo __('Product', $lang, '../'); ?></th><th><?php echo __('Price', $lang, '../'); ?></th>
 		<th><?php echo __('Cuantity', $lang, '../'); ?></th><th><?php echo __('Date', $lang, '../'); ?></th><th></th><th></th></tr>
-<?php	
+<?php
 		foreach($sql as $sel){
 			if (isset($_GET["prod"])) {
 				$query="SELECT * FROM v_productos_seleccion INNER JOIN v_productos ON idproducto=id
 				WHERE idmaquina=$id AND sel='$sel[sel]' AND producto LIKE '%$_GET[prod]%'";
-				
+
 			} else {
 				$query="SELECT * FROM v_productos_seleccion INNER JOIN v_productos ON idproducto=id
 				WHERE idmaquina=$id AND sel='$sel[sel]'";
 			}
-			
+
 			$sql2=query($query, $basededatos, $con);
 			$con++;
 			$num = $sql2->rowCount();
-			
+
 			if ($num<1) {
 				echo "<tr>";
 				echo "<td><center>";
 				if ($sel["visible_log"] == 1) echo "<input type='checkbox' id='$sel[sel]'>";
 				else 						  echo "<input type='checkbox' id='$sel[sel]' checked>";
-				
+
 				echo "</center></td>";
 ?>
 				<td><?php echo $sel['sel']; ?></td>
@@ -69,7 +69,7 @@
 					echo "<td><center>";
 					if ($sel["visible_log"] == 1) echo "<input type='checkbox' id='$sel[sel]'>";
 					else 						  echo "<input type='checkbox' id='$sel[sel]' checked>";
-					
+
 					echo "</center></td>";
 ?>
 				<td><?php echo $sel['sel']; ?></td>
@@ -87,5 +87,5 @@
 			}
 		}
 		$basededatos=null;
-	?>	
+	?>
 </table>

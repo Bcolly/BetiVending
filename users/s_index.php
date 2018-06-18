@@ -29,50 +29,6 @@
     <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
     <link rel="apple-touch-icon" href="../apple-touch-icon.png">
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <style>
-        body {
-          padding-top: 30px;
-          padding-bottom: 20px;
-        }
-				#tabla{
-					height: 300px; /* %-height of the viewport */
-					overflow-y: auto;
-				}
-				.sidenav {
-				  height: 100%;
-				  width: 0;
-				  position: fixed;
-				  z-index: 2;
-				  top: 0;
-				  right: 0;
-				  background-color: #111;
-				  overflow-x: hidden;
-				 	transition: 0.5s;
-				  padding-top: 60px;
-				}
-				.sidenav a {
-				  padding: 8px 8px 8px 32px;
-				  text-decoration: none;
-				  font-size: 25px;
-				  color: #818181;
-				  display: block;
-				  transition: 0.3s;
-				}
-				.sidenav a:hover {
-				  color: #f1f1f1;
-				}
-				.sidenav .closebtn {
-		    position: absolute;
-		    top: 0;
-		    right: 25px;
-		    font-size: 36px;
-		    margin-left: 50px;
-				}
-				@media screen and (max-height: 450px) {
-			  	.sidenav {padding-top: 15px;}
-				  .sidenav a {font-size: 18px;}
-				}
-    </style>
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/bootstrap_wizard.css">
@@ -83,7 +39,6 @@
 			function openNav() {
 			    document.getElementById("ajustes").style.width = "250px";
 			}
-
 			function closeNav() {
 			    document.getElementById("ajustes").style.width = "0";
 			}
