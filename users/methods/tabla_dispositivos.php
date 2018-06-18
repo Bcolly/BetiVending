@@ -7,12 +7,12 @@
 	} else $pre = "";
 
 		$usuario=$_SESSION["user"];
-		
+
 		if (!isset($_SESSION["dispord"])){
 			$_SESSION["dispord"] = "-";
 			$_SESSION["discont"] = "-";
 		}
-		
+
 		if (isset($_GET["ordb"])) {
 			if (strcmp($_SESSION["dispord"], $_GET["ordb"]) != 0){
 				$_SESSION["dispord"] = $_GET["ordb"];
@@ -28,28 +28,28 @@
 		if (isset($_GET["disp"]) && !isset($_GET["zona"]))
 			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
 			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and d.nombre LIKE '%$_GET[disp]%'";
-			
-		elseif (!isset($_GET["disp"]) && isset($_GET["zona"])) 
+
+		elseif (!isset($_GET["disp"]) && isset($_GET["zona"]))
 			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
 			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and l.calle LIKE '%$_GET[zona]%'";
-			
+
 		elseif (isset($_GET["disp"]) && isset($_GET["zona"]))
 			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
 			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and l.calle LIKE '%$_GET[zona]%' and d.nombre LIKE '%$_GET[disp]%'";
-			
-		else 
+
+		else
 			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
 			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal";
-		
+
 		if (strcmp($_SESSION["dispord"], "-") != 0) {
 			$query .= " ORDER BY $_SESSION[dispord]";
 			if ((strcmp($_SESSION["discont"], "0") == 0))
 				$query  .=" ASC";
 			else $query .=" DESC";
 		}
-		
+
 		$query .= ';';
-		
+
 		$con=1;
 		$basededatos=conectardb();
 		$dispositivos=query($query, $basededatos, $con);
@@ -63,15 +63,16 @@
 			<th>IP</th>
 			<th onclick="filtro('l.calle')"><?php echo __('ZONE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th><?php echo __('MACHINE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
+			<th></th>
 		</tr>
-<?php	
+<?php
 		foreach($dispositivos as $dispositivo)
 			mostrardisp($dispositivo);
-			
+
 		$basededatos = null; #cerramos la conexión
-?>	
+?>
 	</table>
-<?php 
+<?php
 	function mostrardisp($dispositivo){
 		global $lang, $basededatos, $con, $pre;
 		$a=$dispositivo["nombre"];
@@ -81,16 +82,23 @@
 		<td><a href='dispositivo.php?OBJ=".serialize($dispositivo)."'>$a</a></td>
 		<td><a href='http://$dispositivo[IPpublica]' target='new'>$dispositivo[IPpublica]</a></td>
 		<td>". __($dispositivo['calle'], $lang, $pre.'../') ."</td>";
-		
+
 		$maquinas=query("SELECT * FROM v_maquinas WHERE dispositivoid=$dispositivo[id]", $basededatos, $con);
-		$con++;		
-			
+		$con++;
+
 		echo "<td>";
-		foreach ($maquinas as $maquina) 
+		foreach ($maquinas as $maquina)
 			mostrarmaq($maquina);
-		echo "<td/></tr>";
+		echo "<td/>";
+?>
+		<td>
+			<img src='../img/listacarga.png' height='30' width='30' alt="<?php echo __('Loadign list', $lang, $pre.'../'); ?>"
+				title="<?php echo __('Loading list', $lang, $pre.'../'); ?>"
+				onclick="abrir('s_listacarga.php?id=<?php echo $maquina['id']; ?>')" />
+		</td></tr>
+<?php
 	}
-	
+
 	function mostrarmaq($maquina){
 		global $lang, $basededatos, $con, $pre;
 		echo "<a href='s_maquina.php?OBJ=$maquina[id]'>$maquina[nombre]</a>";
