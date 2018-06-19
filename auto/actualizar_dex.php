@@ -4,7 +4,7 @@
 		$mensaje=str_replace("==","*",$mensaje);
 		$mensaje=str_replace("=","",$mensaje);
 		$mensaje=preg_replace("#\*{2,}#","*",$mensaje);
-		
+
 		$lineas = explode("\n", $mensaje);
 
 		if (count($lineas) > 1) {
@@ -25,7 +25,7 @@
 					}
 					if ($num < 1) { # si no la hay, la creamos
 						try{
-							$sql = $basededatos->prepare("INSERT into v_historico (idmaquina, fecha, ventas, ganancias) 
+							$sql = $basededatos->prepare("INSERT into v_historico (idmaquina, fecha, ventas, ganancias)
 							values ($maquina,'$fecha',$ventas,$ganancias)");
 							$sql->execute();
 						} catch (exception $e) {
@@ -64,7 +64,7 @@
 						if(strstr($PA2, "PA2")) { #nos aseguramos que la linea es PA2
 							#echo $PA2."<br/>";
 							try{ #buscamos la ultima linea de la seleccion de una maquina
-								$sql = $basededatos->query("SELECT sel, MAX(fecha) as fecha, unidades, beneficio 
+								$sql = $basededatos->query("SELECT sel, MAX(fecha) as fecha, unidades, beneficio
 								FROM v_ultimasventas WHERE sel='$sel' AND idmaquina=$maquina");
 								$num = $sql->rowCount();
 							} catch (exception $e) {
@@ -86,9 +86,9 @@
 							#$fecha_hora = $fecha." ".$hora;
 							$fecha_hora = $fecha." 00:00:00";
 							if ($row["fecha"]==$fecha_hora) {
-								$query="UPDATE v_ultimasventas SET unidades=unidades+$ventas, beneficio=beneficio+$beneficio WHERE sel='$sel' 
+								$query="UPDATE v_ultimasventas SET unidades=unidades+$ventas, beneficio=beneficio+$beneficio WHERE sel='$sel'
 								AND idmaquina=$maquina AND fecha='$fecha_hora'";
-								
+
 							} else {
 								$query="INSERT into v_ultimasventas (idmaquina, sel, fecha, unidades, beneficio)
 								values ($maquina,'$sel','$fecha',$ventas,$beneficio)";
@@ -124,10 +124,10 @@
 							$sel = str_replace("A", "V", $sel);
 							$sel = str_replace("B", "W", $sel);
 						# fin de los ajustes
-						
+
 						$sel=substr($linea[1], 0, 4)."".$sel;
 						#echo $sel."<br/>";
-						
+
 						#buscamos si el evento ya existe
 						try{
 							$sql = $basededatos->query("SELECT * FROM v_evento
@@ -206,5 +206,24 @@
 				echo "No se puede la consulta 16";
 				exit;
 			}
+		}
+
+		function read_va1($sl) {
+			global $basededatos, $con, $fecha, $maquina;
+			//echo $sl."<br/>";
+			$linea=explode("*", $sl);
+			$ganancias=$linea[1]/100;
+			$ventas=$linea[2];
+			// buscamos si hay una linea con la fecha del mensaje
+			$fHist = query("SELECT fecha FROM v_historico WHERE fecha='$fecha' AND idmaquina=$maquina", $basededatos, $con);
+			$con++; //c6
+			if ($fHist->rowCount() < 1) { // si no la hay, la creamos
+				echo "INSERT into v_historico (idmaquina, fecha, ventas, ganancias)
+				values ($maquina,'$fecha',$ventas,$ganancias)<br>";
+				execute("INSERT into v_historico (idmaquina, fecha, ventas, ganancias)
+				values ($maquina,'$fecha',$ventas,$ganancias)", $basededatos, $con);
+				echo "grabada nueva fecha.<br />";
+			}
+			$con++; //c7
 		}
 ?>

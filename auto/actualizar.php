@@ -36,10 +36,10 @@ if($stream){
 		$asuntos=explode(" ",$asunto); #dividimos el asunto en un array por los espacios
 		$hora=$asuntos[6];
 		$dispositivo=$asuntos[3];
-		$fechas=explode("/",$asuntos[5]); 
+		$fechas=explode("/",$asuntos[5]);
 		$fecha=$fechas[2]."-".$fechas[1]."-".$fechas[0]; #cambiamos el formato de la fecha de XX/XX/XXXX a XXXX-XX-XX
 		$hora_envio=date("Y-m-d H:i:s", strtotime($fecha." ".$hora));
-		
+
 		#comprobamos si la maquina esta en la base de datos. Si no esta la guardamos
 		try{
 			$maquinas = $basededatos->query("SELECT m.id FROM v_maquinas as m, v_dispositivo as d WHERE m.dispositivoid=d.id AND d.nombre='$dispositivo'");
@@ -50,7 +50,7 @@ if($stream){
 		}
 		if ($num < 1) {
 			try{
-				$sql = $basededatos->prepare("INSERT into v_maquinas (nombre, dispositivoid) 
+				$sql = $basededatos->prepare("INSERT into v_maquinas (nombre, dispositivoid)
 				values ('$dispositivo',(SELECT id FROM v_dispositivo WHERE nombre='$dispositivo'))");
 				$sql->execute();
 			} catch (exception $e) {
@@ -60,7 +60,7 @@ if($stream){
 				exit;
 			}
 			echo "grabada nueva maquina.<br />";
-			
+
 			try{ #ahora buscamos la id de la maquina que acabamos de crear
 				$maquinas = $basededatos->query("SELECT m.id FROM v_maquinas as m, v_dispositivo as d WHERE m.dispositivoid=d.id AND d.nombre='$dispositivo'");
 			} catch (exception $e) {
@@ -77,7 +77,7 @@ if($stream){
 		}
 		$maquina=$row["id"];
 		#echo $maquina."<br/>";
-		
+
 		#esta consulta no se usa para nada
 		/*try{
 			$fecha= $basededatos->query("SELECT fecha FROM v_historico WHERE fecha='$fecha'");
@@ -86,11 +86,11 @@ if($stream){
 			echo "No se puede la consulta 1";
 			exit;
 		}*/
-		
+
 		$mensaje=imap_body($stream, $nm); #cogemos el cuerpo del mensaje $nm
 		$mensaje=chop($mensaje); #retira los caracteres en blanco del final de $mensaje
 		#echo $mensaje."<br/>";
-		
+
 		$mensaje=preg_replace("#0(A|D)#","",$mensaje);
 		#echo $mensaje."<br/>";
 		$mensaje = str_replace(" ", "*", $mensaje);
@@ -101,7 +101,7 @@ if($stream){
 		#echo $mensaje."<br/>";
 		$mensaje=preg_replace("#\*{2,}#","*",$mensaje);
 		#echo $mensaje."<br/>";
-		
+
 		$lineas = explode("\n", $mensaje);
 
 		if (count($lineas) > 1) {
@@ -122,7 +122,7 @@ if($stream){
 					}
 					if ($num < 1) { # si no la hay, la creamos
 						try{
-							$sql = $basededatos->prepare("INSERT into v_historico (idmaquina, fecha, ventas, ganancias) 
+							$sql = $basededatos->prepare("INSERT into v_historico (idmaquina, fecha, ventas, ganancias)
 							values ($maquina,'$fecha',$ventas,$ganancias)");
 							$sql->execute();
 						} catch (exception $e) {
@@ -161,7 +161,7 @@ if($stream){
 						if(strstr($PA2, "PA2")) { #nos aseguramos que la linea es PA2
 							#echo $PA2."<br/>";
 							try{ #buscamos la ultima linea de la seleccion de una maquina
-								$sql = $basededatos->query("SELECT sel, MAX(fecha) as fecha, unidades, beneficio 
+								$sql = $basededatos->query("SELECT sel, MAX(fecha) as fecha, unidades, beneficio
 								FROM v_ultimasventas WHERE sel='$sel' AND idmaquina=$maquina");
 								$num = $sql->rowCount();
 							} catch (exception $e) {
@@ -183,9 +183,9 @@ if($stream){
 							#$fecha_hora = $fecha." ".$hora;
 							$fecha_hora = $fecha." 00:00:00";
 							if ($row["fecha"]==$fecha_hora) {
-								$query="UPDATE v_ultimasventas SET unidades=unidades+$ventas, beneficio=beneficio+$beneficio WHERE sel='$sel' 
+								$query="UPDATE v_ultimasventas SET unidades=unidades+$ventas, beneficio=beneficio+$beneficio WHERE sel='$sel'
 								AND idmaquina=$maquina AND fecha='$fecha_hora'";
-								
+
 							} else {
 								$query="INSERT into v_ultimasventas (idmaquina, sel, fecha, unidades, beneficio)
 								values ($maquina,'$sel','$fecha',$ventas,$beneficio)";
@@ -221,10 +221,10 @@ if($stream){
 							$sel = str_replace("A", "V", $sel);
 							$sel = str_replace("B", "W", $sel);
 						# fin de los ajustes
-						
+
 						$sel=substr($linea[1], 0, 4)."".$sel;
 						#echo $sel."<br/>";
-						
+
 						#buscamos si el evento ya existe
 						try{
 							$sql = $basededatos->query("SELECT * FROM v_evento
