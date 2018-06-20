@@ -1,6 +1,6 @@
 <?php
 //JOF_03
-include_once("../conexion.php");
+require_once("../conexion.php");
 $hoy=date("Y-m-d");
 $ahora=date("G:i");
 #configuramos los valores para leer el correo
@@ -27,7 +27,7 @@ if($stream){
 		$fecha=$asuntos[5];
 		$hora_envio=date("Y-m-d H:i:s", strtotime($fecha." ".$hora));
 		echo $hora_envio."<br/>";
-		
+
 		#comprobamos si la maquina esta en la base de datos. Si no esta la guardamos
 		try{
 			$maquinas = $basededatos->query("SELECT m.id FROM v_maquinas as m, v_dispositivo as d WHERE m.dispositivoid=d.id AND d.nombre='$dispositivo'");
@@ -38,7 +38,7 @@ if($stream){
 		}
 		if ($num < 1) {
 			try{
-				$sql = $basededatos->prepare("INSERT into v_maquinas (nombre, dispositivoid) 
+				$sql = $basededatos->prepare("INSERT into v_maquinas (nombre, dispositivoid)
 				values ('$dispositivo',(SELECT id FROM `v_dispositivo` WHERE nombre='$dispositivo'))");
 				$sql->execute();
 			} catch (exception $e) {
@@ -48,7 +48,7 @@ if($stream){
 				exit;
 			}
 			echo "grabada nueva maquina.<br />";
-			
+
 			try{ #ahora buscamos la id de la maquina que acabamos de crear
 				$maquinas = $basededatos->query("SELECT m.id FROM v_maquinas as m, v_dispositivo as d WHERE m.dispositivoid=d.id AND d.nombre='$dispositivo'");
 			} catch (exception $e) {
@@ -65,12 +65,12 @@ if($stream){
 		}
 		$maquina=$row["id"];
 		//echo $maquina."<br/>";
-		
+
 		$mensaje=imap_body($stream, $nm); #cogemos el cuerpo del mensaje $nm
 		$mensaje=chop($mensaje); #retira los caracteres en blanco del final de $mensaje
-		
+
 		$bloques = explode("\n\r\n", $mensaje);
-		
+
 		if (count($bloques)>1) {
 			$b = $bloques[0];
 			$lineas = explode("\n", $b);
@@ -82,7 +82,7 @@ if($stream){
 				echo "No se puede la consulta 5";
 				exit;
 			}
-			
+
 			try{ # buscamos si hay una linea con la fecha del mensaje
 				$sql = $basededatos->query("SELECT fecha FROM v_historico WHERE fecha='$fecha' AND idmaquina=$maquina");
 				$num = $sql->rowCount();
@@ -90,10 +90,10 @@ if($stream){
 				echo "No se puede la consulta 6";
 				exit;
 			}
-			if ($num < 1) { # si no la hay, la creamos 
+			if ($num < 1) { # si no la hay, la creamos
 				$ganancias = $lineas[27];
 				try{
-					$sql = $basededatos->prepare("INSERT into v_historico (idmaquina, fecha, ganancias) 
+					$sql = $basededatos->prepare("INSERT into v_historico (idmaquina, fecha, ganancias)
 					values ($maquina,'$fecha',$ganancias)");
 					$sql->execute();
 				} catch (exception $e) {
@@ -102,7 +102,7 @@ if($stream){
 				}
 				echo "grabada nueva fecha.<br />";
 			}
-			
+
 			unset($bloques[0]);  #eliminamos el primer bloque porque despues de este estan todas las selecciones
 			$sel = 1;
 			foreach ($bloques as $b){
@@ -140,7 +140,7 @@ if($stream){
 					}
 				} else {
 					try{ #buscamos la ultima linea de la seleccion de una maquina
-						$sql = $basededatos->query("SELECT sel, MAX(fecha) as fecha, unidades, beneficio 
+						$sql = $basededatos->query("SELECT sel, MAX(fecha) as fecha, unidades, beneficio
 						FROM v_ultimasventas WHERE sel='$sel' AND idmaquina=$maquina");
 						$row = $sql->fetch();
 					} catch (exception $e) {
@@ -152,7 +152,7 @@ if($stream){
 					$beneficio=$ventas*$precio;
 					$fecha_hora = $fecha." 00:00:00";
 					if ($row["fecha"]==$fecha_hora) {
-						$query="UPDATE v_ultimasventas SET unidades=unidades+$ventas, beneficio=beneficio+$beneficio WHERE sel='$sel' 
+						$query="UPDATE v_ultimasventas SET unidades=unidades+$ventas, beneficio=beneficio+$beneficio WHERE sel='$sel'
 						AND idmaquina=$maquina AND fecha='$fecha_hora'";
 					} else {
 						$query="INSERT into v_ultimasventas (idmaquina, sel, fecha, unidades, beneficio)

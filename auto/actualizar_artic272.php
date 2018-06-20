@@ -1,6 +1,6 @@
 <?php
 		$lineas = explode("\n", $mensaje);
-		
+
 		if (count($lineas)>1) {
 			$x=8;
 			$fin=false;
@@ -18,6 +18,7 @@
 					$fin=true;
 				}
 			}
+			
 			try{
 				$sql = $basededatos->prepare("UPDATE v_maquinas as m SET m5c=$m5,m10c=$m10,m20c=$m20,m50c=$m50,m100c=$m100,m200c=$m200 WHERE id=$maquina");
 				$sql->execute();
@@ -33,11 +34,11 @@
 				echo "No se puede la consulta 6";
 				exit;
 			}
-			if ($num < 1) { # si no la hay, la creamos 
+			if ($num < 1) { # si no la hay, la creamos
 				#echo $lineas[$x]."<br/>";
 				$ganancias=$lineas[$x];
 				try{
-					$sql = $basededatos->prepare("INSERT into v_historico (idmaquina, fecha, ganancias) 
+					$sql = $basededatos->prepare("INSERT into v_historico (idmaquina, fecha, ganancias)
 					values ($maquina,'$fecha',$ganancias)");
 					$sql->execute();
 				} catch (exception $e) {
@@ -84,7 +85,7 @@
 						}
 					} else {
 						try{ #buscamos la ultima linea de la seleccion de una maquina
-							$sql = $basededatos->query("SELECT sel, MAX(fecha) as fecha, unidades, beneficio 
+							$sql = $basededatos->query("SELECT sel, MAX(fecha) as fecha, unidades, beneficio
 							FROM v_ultimasventas WHERE sel='$sel' AND idmaquina=$maquina");
 							$row = $sql->fetch();
 						} catch (exception $e) {
@@ -95,7 +96,7 @@
 						$beneficio=$ventas*$precio;
 						$fecha_hora = $fecha." 00:00:00";
 						if ($row["fecha"]==$fecha_hora) {
-							$query="UPDATE v_ultimasventas SET unidades=unidades+$ventas, beneficio=beneficio+$beneficio WHERE sel='$sel' 
+							$query="UPDATE v_ultimasventas SET unidades=unidades+$ventas, beneficio=beneficio+$beneficio WHERE sel='$sel'
 							AND idmaquina=$maquina AND fecha='$fecha_hora'";
 						} else {
 							$query="INSERT into v_ultimasventas (idmaquina, sel, fecha, unidades, beneficio)
