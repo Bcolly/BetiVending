@@ -1,19 +1,15 @@
-<?php include_once("../language.php"); ?>
-<?php include_once ("seguridad.php"); ?>
+<?php include_once("../lang/language.php"); ?>
+<?php require_once ("seguridad.php"); ?>
 <?php include_once ("../conexion.php"); ?>
 <html>
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<meta name="description" content="">  
+		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<style>
-			body {
-				padding-top: 30px;
-				padding-bottom: 20px;
-			}
 			input[type=text] {
 				width: 200px;
 			}
@@ -32,21 +28,15 @@
 		<tr><th><?php echo __('Selection', $lang, '../')?></th><th><?php echo __('Cuantity', $lang, '../')?></th><th><?php echo __('Date', $lang, '../')?></th><th></th></tr>
 <?php
 if (isset($_GET['id']) and isset($_GET['prod'])){
-	try {
-		$sql=$basededatos->query("SELECT sel FROM v_seleccion WHERE idmaquina=$_GET[id] ORDER BY sel");
-	} catch (exception $e) {
-		echo "No se puede la consulta 1";
-		exit;
-	}
+	$basededatos = conectardb();
+	$con=1;
+	$sql = query("SELECT sel FROM v_seleccion WHERE idmaquina=$_GET[id] ORDER BY sel", $basededatos, $con);
+	$con++;
+
 	foreach ($sql as $sel) {
-		try {
-			$sql2=$basededatos->query("SELECT * FROM v_productos_seleccion INNER JOIN v_productos ON idproducto=id 
-			WHERE idmaquina=$_GET[id] AND sel='$sel[sel]'");
-			$num = $sql2->rowCount();
-		} catch (exception $e) {
-			echo "No se puede la consulta 2";
-			exit;
-		}
+		$sql2 = query("SELECT * FROM v_productos_seleccion INNER JOIN v_productos ON idproducto=id
+		WHERE idmaquina=$_GET[id] AND sel='$sel[sel]'", $basededatos, $con);
+		$num = $sql2->rowCount();
 ?>
 	<form class="container" method="POST">
 		<tr>
@@ -62,6 +52,7 @@ if (isset($_GET['id']) and isset($_GET['prod'])){
 
 <?php
 	}
+	$con++;
 }
 ?>
 	</body>
@@ -69,14 +60,8 @@ if (isset($_GET['id']) and isset($_GET['prod'])){
 <?php
 if (isset($_POST['submit'])){
 	$date = "$_POST[year]-$_POST[month]-$_POST[day]";
-	try{
-		$sql = $basededatos->prepare("INSERT into v_productos_seleccion (idmaquina, sel, idproducto, tiempo, cantidad)
-		values ($_GET[id],'$_POST[seleccion]',$_GET[prod],'$date', $_POST[cant])");
-		$sql->execute();
-		echo __('Product added correctly', $lang, '../');
-	} catch (exception $e) {
-		echo "No se puede la consulta 1";
-		exit;
-	}
+	execute("INSERT into v_productos_seleccion (idmaquina, sel, idproducto, tiempo, cantidad)
+	values ($_GET[id],'$_POST[seleccion]',$_GET[prod],'$date', $_POST[cant])", $basededatos, $con);
+	echo __('Product added correctly', $lang, '../');
 }
 ?>

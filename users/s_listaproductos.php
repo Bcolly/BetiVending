@@ -5,26 +5,34 @@
 	$productos=query("SELECT * FROM v_productos;", $basededatos, $con);
 	$con++;
 ?>
-
-	<form class="navbar-form navbar-left" role="form" method="POST">
-		<div class="form-group">
-			<label for="producto"><?php echo __('PRODUCT', $lang, '../') ?> : </label>
-			<input type="text" class="form-control" id="producto" name="producto">
+	<div class="row">
+		<div class="col col-md-6">
+			<form class="navbar-form navbar-left" role="form">
+				<div class="form-group">
+					<label for="producto"><?php echo __('PRODUCT', $lang, '../') ?> : </label>
+					<input type="text" class="form-control" id="producto" name="producto">
+				</div>
+				<div class="form-group">
+					<label for="familia"><?php echo __('FAMILY', $lang, '../') ?> : </label>
+					<select class="form-control" id="familia" name="familia">
+					  <option value="" selected="selected">- <?php echo __('select', $lang, '../') ?> -</option>
+					  <!--<option value="windows">Windows</option>
+					  <option value="mac">Mac</option>
+					  <option value="linux">Linux</option>
+					  <option value="otro">Otro</option>-->
+					</select>
+				</div>
+				<button type="button" class="btn btn-success" onclick="filtro()"><?php echo __('FILTER', $lang, '../') ?></button>
+			</form>
 		</div>
-		<div class="form-group">
-			<label for="familia"><?php echo __('FAMILY', $lang, '../') ?> : </label>
-			<select class="form-control" id="familia" name="familia">
-			  <option value="" selected="selected">- <?php echo __('select', $lang, '../') ?> -</option>
-			  <!--<option value="windows">Windows</option>
-			  <option value="mac">Mac</option>
-			  <option value="linux">Linux</option>
-			  <option value="otro">Otro</option>-->
-			</select>
+		<div class="col-md-3 col-md-offset-3">
+			<form class="navbar-form navbar-left" role="form">
+				<label for="familia"><?php echo __('Need more products?', $lang, '../') ?></label>
+				<button type="button" class="btn btn-primary" onclick="abrir('newproduct.php')"><?php echo __('ADD', $lang, '../') ?></button>
+			</form>
 		</div>
-		<button type="button" class="btn btn-success" onclick="filtro()"><?php echo __('FILTER', $lang, '../') ?></button>
-	</form>
-	<br/><br/><br/>
-	<div data-spy="scroll" data-target=".table" id="tabla">
+	</div>
+	<div class="row" data-spy="scroll" data-target=".table" id="tabla">
 		<table class="table table-striped">
 		<tr><th></th><th><?php echo __('PRODUCT', $lang, '../')?></th><th><?php echo __('FAMILY', $lang, '../')?></th><th><?php echo __('PRICE AVG', $lang, '../')?></th><th><?php echo __('ADD TO MACHINES', $lang, '../')?></th></tr>
 	<?php
