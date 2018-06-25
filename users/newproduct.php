@@ -154,7 +154,7 @@
 			$query .= $values.";";
 			$basededatos = conectardb();
 			execute($query, $basededatos, 1);
-	  	echo __('Product added correctly', $lang, '../');
+	  	echo "<h3>".__('Product added correctly', $lang, '../')."</h3>";
 			$basededatos = null; //cerramos conexion
 		}
   }
