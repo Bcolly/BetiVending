@@ -1,6 +1,6 @@
 <?php include_once("../lang/language.php"); ?>
 <?php require_once ("seguridad.php"); ?>
-<?php include_once ("../conexion.php"); ?>
+<?php require_once ("../conexion.php"); ?>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -36,7 +36,6 @@
 			}
 
 			function comprobarNuevoProducto(prod, ean1, ean2, precio, oferta, familia) {
-				alert('comprobaciones para enviar');
 				var preciop = "^[0-9]{1,2}([.,][0-9]{1,2})?$";
 				var correcto = true;
 				if (prod == "")
@@ -102,10 +101,10 @@
 
 <?php
   if (isset($_POST['submit'])){
-		foreach($_POST as $campo => $valor)
+		/*foreach($_POST as $campo => $valor)
 			echo "$campo -> $valor <br>";
 		foreach($_FILES as $campo => $valor)
-				echo "$campo -> ".print_r($valor)." <br>";
+				echo "$campo -> ".print_r($valor)." <br>";*/
 		$query = "INSERT INTO v_productos (ean1, ean2, producto, PVP, PVPoferta, foto_th, familia) VALUES ";
 		$values = "(";
 		$correcto = true;
@@ -145,17 +144,18 @@
 			$correcto = false;
 
 		if (subirimg($_FILES["file-input"]))
+			//url donde se guarda la imagen
 			$values .= "'http://localhost/betiV/img/uploads/".$_FILES["file-input"]["name"]."', ";
 		else
 			$values .= "'', ";
 
-		$values .= "'".$_POST["familia"]."')<br/>";
+		$values .= "'".$_POST["familia"]."')";
 		if ($correcto) {
-			$query .= $values;
-			echo $query;
+			$query .= $values.";";
 			$basededatos = conectardb();
 			execute($query, $basededatos, 1);
 	  	echo __('Product added correctly', $lang, '../');
+			$basededatos = null; //cerramos conexion
 		}
   }
 ?>
@@ -175,7 +175,7 @@
 			// Check if image file is a actual image or fake image
 			$check = getimagesize($img["tmp_name"]);
 			if($check !== false) {
-					echo "File is an image - " . $check["mime"] . ".<br/>";
+					//echo "File is an image - " . $check["mime"] . ".<br/>";
 					$uploadOk = 1;
 			} else {
 					echo "File is not an image.<br/>";
@@ -203,7 +203,7 @@
 			// if everything is ok, try to upload file
 			} else {
 					if (move_uploaded_file($img["tmp_name"], $target_file)) {
-							echo "The file ". basename($img["name"]). " has been uploaded.<br/>";
+							//echo "The file ". basename($img["name"]). " has been uploaded.<br/>";
 							return true;
 					} else {
 							echo "Sorry, there was an error uploading your file.<br/>";
