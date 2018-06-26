@@ -34,8 +34,8 @@ if ($maquina != null) { ?>
 				if ($num > 0) {
 					echo '<b>' . __("EVENTS", $lang, "../").': '.$num;
 				?></b><br/>
-				<button type="button" class="btn btn-info" onclick="abrir('s_evento.php?id=<?php echo$id; ?>')"><?php echo __("SHOW EVENTS", $lang, "../")?></button>
-				<button type="button" class="btn btn-info" onclick="limpiar('<?php echo$id; ?>')"><?php echo __("CLEAR", $lang, "../")?></button>
+				<button type="button" class="btn btn-info" onclick="abrir('s_evento.php?id=<?php echo $id; ?>')"><?php echo __("SHOW EVENTS", $lang, "../")?></button>
+				<button type="button" class="btn btn-info" onclick="limpiar('<?php echo $id; ?>')"><?php echo __("CLEAR", $lang, "../")?></button>
 			<?php }
 			} ?>
 			</div>
@@ -48,12 +48,15 @@ if ($maquina != null) { ?>
 				<th>
 					<input type="button" class="btn btn-primary" onclick="ocultar(<?php echo $id; ?>)" value="<?php echo __('HIDE', $lang, '../')?>"></input>
 				</th>
-				<th><?php echo __('Selection', $lang, '../')?></th>
-				<th><?php echo __('Product', $lang, '../')?></th>
-				<th><?php echo __('Price', $lang, '../')?></th>
-				<th><?php echo __('Cuantity', $lang, '../')?></th>
-				<th><?php echo __('To go', $lang, '../')?></th>
-				<th><?php echo __('Date', $lang, '../')?></th>
+				<th><?php echo __('Selection', $lang, '../');?></th>
+				<th><?php echo __('Product', $lang, '../');?></th>
+				<th><?php echo __('Price', $lang, '../');?></th>
+				<th>
+					<?php echo __('Cuantity', $lang, '../');?><br/>
+					<button type="button" class="btn btn-success" onclick="llenarAll(<?php echo $id; ?>)"><?php echo __("FILL ALL", $lang, "../");?></button>
+				</th>
+				<th><?php echo __('To go', $lang, '../');?></th>
+				<th><?php echo __('Date', $lang, '../');?></th>
 				<th></th><th></th>
 			</tr>
 <?php
@@ -104,12 +107,12 @@ include_once ("s_footer.php"); ?>
 <?php
 		} else {
 			foreach ($productos as $producto)
-				mostrarproducto($sel, $producto);
+				mostrarproducto($id, $sel, $producto);
 		}
 	}
 
-	function mostrarproducto($sel, $producto){
-		global $lang, $basededatos, $con;
+	function mostrarproducto($id, $sel, $producto){
+		global $lang;
 ?>
 		<tr>
 			<td><center><input type='checkbox' id='<?php echo $sel['sel']; ?>'></center></td>
@@ -120,8 +123,8 @@ include_once ("s_footer.php"); ?>
 			</td>
 			<td><?php echo $sel['uDEXprecio']; ?></td>
 			<td>
-				<input type='number' style="width:30%;" id='cantidad_sel' name='cantidad_sel' value='<?php $producto['cantidad']; ?>' min='0' max='<?php echo $sel['max']; ?>'/>
-				<button type='button' class='btn btn-success' onclick="llenar(<?php echo $id; ?>,<?php echo $sel['sel']; ?>, document.getElementById('cantidad_sel').value)" >+</button>
+				<input type='number' style="width:30%;" id='cantidad_sel' name='cantidad_sel' value='0' min='0' max='<?php echo $sel['max']-$producto['cantidad']; ?>'/>
+				<button type='button' class='btn btn-success' onclick="llenar(<?php echo $id; ?>,'<?php echo $sel['sel']; ?>', document.getElementById('cantidad_sel').value);" >+</button>
 			</td>
 			<td><?php echo $sel['max']-$producto['cantidad']; ?></td>
 			<td><?php echo $producto['tiempo']; ?></td>

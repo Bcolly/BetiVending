@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/bootstrap_wizard.css">
 	<script src="../js/ajax.js"></script>
-	<script src="../js/addproduct.js"></script>
 	<script language="JavaScript">
 			function cerrar() {
 			ventana=window.self;
@@ -33,23 +32,43 @@
 <?php
 if (isset($_GET['id']) && isset($_GET['sel'])){
 ?>
-	<div class="container"><div class="row">
-	<div class="col col-sm-3">
-		<form class="container" method="POST">
-			<input type="hidden" name="maquina" value="<?php echo $_GET['id']; ?>" />
-			<input type="hidden" name="seleccion" value="<?php echo $_GET['sel']; ?>" />
-			<p><?php echo __('Product', $lang, '../') ?>: <input type="text" name="product" onchange="mostrar(this.value)"/></p>
-			<p><?php echo __('Sell-by-date', $lang, '../') ?> (yyyy/mm/dd):<br/><input type="number" name="year" min=<?php echo (new DateTime)->format("Y"); ?> /><b>/</b>
-			<input type="number" name="month" min=1 max=12 /><b>/</b>
-			<input type="number" name="day" min=1 max=31 /></p>
-			<p><?php echo __('Cuantity', $lang, '../') ?>: <input type="number" name="cant" min=0 value="0"/></p>
-			<p><?php echo __('Max Cuantity', $lang, '../') ?>: <input type="number" name="max" min=1/></p>
-			<p><input type="submit" value="<?php echo __('ADD', $lang, '../') ?>" /></p>
-		</form>
-		<input type="button" value="<?php echo __('CLOSE', $lang, '../') ?>" onclick="cerrar()" />
+	<div class="container">
+		<div class="row">
+			<div class="col col-sm-3">
+				<form class="container" method="POST">
+					<input type="hidden" name="maquina" value="<?php echo $_GET['id']; ?>" />
+					<input type="hidden" name="seleccion" value="<?php echo $_GET['sel']; ?>" />
+					<p>
+						<?php echo __('Product', $lang, '../') ?>:
+						<input list="product" name="product">
+					  <datalist id="product">
+<?php
+						$basededatos = conectardb();
+						$productos = query("SELECT * FROM v_productos WHERE producto LIKE '%$_GET[prod]%'", $basededatos, 1);
+
+						foreach ($productos as $p){
+							echo "<option value='$p[producto]'>";
+						}
+?>
+					  </datalist>
+					</p>
+					<p>
+						<?php echo __('Sell-by-date', $lang, '../') ?> (yyyy/mm/dd):<br/><input type="number" name="year" min=<?php echo (new DateTime)->format("Y"); ?> /><b>/</b>
+						<input type="number" name="month" min=1 max=12 /><b>/</b>
+						<input type="number" name="day" min=1 max=31 /></p>
+					<p><?php echo __('Cuantity', $lang, '../') ?>: <input type="number" name="cant" min=0 value="0"/></p>
+					<p><?php echo __('Max Cuantity', $lang, '../') ?>: <input type="number" name="max" min=1/></p>
+					<p>
+						<input type="submit" value="<?php echo __('ADD', $lang, '../') ?>" />
+						<input type="button" value="<?php echo __('CLOSE', $lang, '../') ?>" onclick="cerrar()" />
+					</p>
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col col-sm-3" id="products" style="display: none; overflow-y: scroll; height: 400px;"></div>
+		</div>
 	</div>
-	<div class="col col-sm-3" id="products" style="display: none; overflow-y: scroll; height: 400px;"></div>
-	</div></div>
 <?php
 }
 ?>
@@ -65,23 +84,15 @@ if (isset($_POST['product'])){
 		$query = "INSERT into v_productos_seleccion (idmaquina, sel, idproducto, cantidad)
 		values ($_POST[maquina],'$_POST[seleccion]',(SELECT id FROM v_productos WHERE producto='$_POST[product]'), $_POST[cant])";
 	}
-	try{
-		$sql = $basededatos->prepare($query);
-		$sql->execute();
-		echo __('Product added correctly', $lang, '../');
-	} catch (exception $e) {
-		echo "No se puede la consulta 1";
-		exit;
-	}
-}
-if ($_POST['max'] != ''){
-	try{
-		$sql = $basededatos->prepare("UPDATE v_seleccion SET max = $_POST[max] WHERE idmaquina = $_POST[maquina] AND sel = '$_POST[seleccion]'");
-		$sql->execute();
+	$con = 1;
+	execute($query, $basededatos, $con);
+	$con++;
+
+	if ($_POST['max'] != ''){
+		execute("UPDATE v_seleccion SET max = $_POST[max] WHERE idmaquina = $_POST[maquina] AND sel = '$_POST[seleccion]'", $basededatos, $con);
+		$con++;
 		echo __('Max added correctly', $lang, '../');
-	} catch (exception $e) {
-		echo "No se puede la consulta 2";
-		exit;
 	}
 }
+$basededatos = null;
 ?>

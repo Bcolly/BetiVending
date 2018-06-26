@@ -23,8 +23,6 @@ function filtro(ord) {
 			document.getElementById("tabla").innerHTML=xhttp.responseText;
 		}
 	};
-	//esto hay que cambiarlo en el host
-	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/tabla_dispositivos.php?"+res, true);
 	xhttp.open("GET",url+"users/methods/tabla_dispositivos.php?js=js&"+res, true);
 	xhttp.send();
 }
@@ -48,9 +46,29 @@ function selfiltro(id){
 			document.getElementById("tabla").innerHTML=xhttp.responseText;
 		}
 	};
-	//esto hay que cambiarlo en el host
-	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/tabla_selecciones.php?"+res, true);
 	xhttp.open("GET",url+"users/methods/tabla_selecciones.php?"+res, true);
+	xhttp.send();
+}
+
+function prodfiltro() {
+	var prod = document.getElementById("producto").value;
+	var fam = document.getElementById("familia").value;
+
+	var res = ""
+	if (prod != "") {
+		res= res+"prod="+prod;
+	}
+	if (fam != "") {
+		if (res != "") { res = res+"&"; }
+		res = res+"fam="+fam;
+	}
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if ((xhttp.readyState==4)&&(xhttp.status==200)){
+			document.getElementById("tabla").innerHTML=xhttp.responseText;
+		}
+	};
+	xhttp.open("GET",url+"users/methods/tabla_productos.php?"+res, true);
 	xhttp.send();
 }
 
@@ -59,8 +77,6 @@ function ocultar(id){
 		if ($(this).prop("id") != "ocultos") {
 			res="id="+id+"&sel="+$(this).prop("id")+"&vis="+$(this).prop("checked");
 			xhttp = new XMLHttpRequest();
-			//esto hay que cambiarlo en el host
-			//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/ocultar.php?"+res, true);
 			xhttp.open("GET",url+"users/methods/tabla_selecciones.php?"+res, true);
 			xhttp.send();
 		}
@@ -94,8 +110,6 @@ function abrir(u) {
 
 function limpiar(id){
 	xhttp = new XMLHttpRequest();
-	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/clear.php?id="+id, false);
-	alert(url+"users/methods/clear.php?id="+id);
 	xhttp.open("GET",url+"users/methods/clear.php?id="+id, false);
 	xhttp.send();
 	window.location.reload()
@@ -103,15 +117,21 @@ function limpiar(id){
 
 function vaciar(id, sel){
 	xhttp = new XMLHttpRequest();
-	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/vaciarseleccion.php?id="+id+"&sel="+sel, false);
 	xhttp.open("GET",url+"users/methods/vaciarseleccion.php?id="+id+"&sel="+sel, false);
 	xhttp.send();
 	window.location.reload()
 }
 
-function llenar(id, sel, cant){
+function llenar(id, sel, cant) {
 	xhttp = new XMLHttpRequest();
 	xhttp.open("GET",url+"users/methods/llenarseleccion.php?id="+id+"&sel="+sel+"&cant="+cant, false);
+	xhttp.send();
+	window.location.reload()
+}
+
+function llenarAll(id) {
+	xhttp = new XMLHttpRequest();
+	xhttp.open("GET",url+"users/methods/llenarseleccion.php?id="+id+"&all=1", false);
 	xhttp.send();
 	window.location.reload()
 }
@@ -123,6 +143,19 @@ function cambiarflag(id){
 }
 
 function addtomach(prod) {
-	var mach = document.getElementById(prod).value
-	abrir('producttomachine.php?id='+mach+'&prod='+prod)
+	var mach = document.getElementById(prod).value;
+	abrir('producttomachine.php?id='+mach+'&prod='+prod);
+}
+
+function mostrarprod(prod){
+	alert();
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if ((xhttp.readyState==4)&&(xhttp.status==200)){
+			document.getElementById("products").style.display='block';
+			document.getElementById("products").innerHTML=xhttp.responseText;
+		}
+	};
+	xhttp.open("GET",url+"users/methods/lista_prod.php?prod="+prod, true);
+	xhttp.send();
 }

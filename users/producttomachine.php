@@ -40,13 +40,11 @@ if (isset($_GET['id']) and isset($_GET['prod'])){
 ?>
 	<form class="container" method="POST">
 		<tr>
-		<td><?php echo $sel['sel']; ?></td>
-		<input type="hidden" value="<?php echo $sel['sel']; ?>" name="seleccion" />
-		<td><input type='number' name='cant' value='1' min='0' max='<?php echo $sel['max']; ?>'/></td>
-		<td><input type="number" name="year" min=<?php echo (new DateTime)->format("Y"); ?> /><b>/</b>
-			<input type="number" name="month" min=1 max=12 /><b>/</b>
-			<input type="number" name="day" min=1 max=31 /></td>
-		<td><button type="submit" name="submit" class="btn btn-primary"><?php echo __("ADD", $lang, "../"); ?></button></td>
+			<td><?php echo $sel['sel']; ?></td>
+			<input type="hidden" value="<?php echo $sel['sel']; ?>" name="seleccion" />
+			<td><input type='number' name='cant' value='1' min='0' max='<?php echo $sel['max']; ?>'/></td>
+			<td><input id="date" name="date" type="date"></td>
+			<td><button type="submit" name="submit" class="btn btn-primary"><?php echo __("ADD", $lang, "../"); ?></button></td>
 		</tr>
 	</form>
 
@@ -59,9 +57,8 @@ if (isset($_GET['id']) and isset($_GET['prod'])){
 </html>
 <?php
 if (isset($_POST['submit'])){
-	$date = "$_POST[year]-$_POST[month]-$_POST[day]";
 	execute("INSERT into v_productos_seleccion (idmaquina, sel, idproducto, tiempo, cantidad)
-	values ($_GET[id],'$_POST[seleccion]',$_GET[prod],'$date', $_POST[cant])", $basededatos, $con);
+	values ($_GET[id],'$_POST[seleccion]',$_GET[prod],'$_POST[date]', $_POST[cant])", $basededatos, $con);
 	echo __('Product added correctly', $lang, '../');
 }
 ?>

@@ -6,7 +6,7 @@
 	$con++;
 ?>
 	<div class="row">
-		<div class="col col-md-6">
+		<div class="col col-md-8">
 			<form class="navbar-form navbar-left" role="form">
 				<div class="form-group">
 					<label for="producto"><?php echo __('PRODUCT', $lang, '../') ?> : </label>
@@ -16,16 +16,19 @@
 					<label for="familia"><?php echo __('FAMILY', $lang, '../') ?> : </label>
 					<select class="form-control" id="familia" name="familia">
 					  <option value="" selected="selected">- <?php echo __('select', $lang, '../') ?> -</option>
-					  <!--<option value="windows">Windows</option>
-					  <option value="mac">Mac</option>
-					  <option value="linux">Linux</option>
-					  <option value="otro">Otro</option>-->
+<?php
+						$familias = query("SELECT DISTINCT familia FROM v_productos WHERE familia <> 'INTERNA'", $basededatos, $con);
+						$con++;
+						foreach ($familias as $row) {
+							echo "<option value='$row[familia]'>$row[familia]</option>";
+						}
+?>
 					</select>
 				</div>
-				<button type="button" class="btn btn-success" onclick="filtro()"><?php echo __('FILTER', $lang, '../') ?></button>
+				<button type="button" class="btn btn-success" onclick="prodfiltro()"><?php echo __('FILTER', $lang, '../') ?></button>
 			</form>
 		</div>
-		<div class="col-md-3 col-md-offset-3">
+		<div class="col-md-3 col-md-offset-1">
 			<form class="navbar-form navbar-left" role="form">
 				<label for="familia"><?php echo __('Need more products?', $lang, '../') ?></label>
 				<button type="button" class="btn btn-primary" onclick="abrir('newproduct.php')"><?php echo __('ADD', $lang, '../') ?></button>
@@ -34,29 +37,8 @@
 	</div>
 	<div class="row" data-spy="scroll" data-target=".table" id="tabla">
 		<table class="table table-striped">
-		<tr><th></th><th><?php echo __('PRODUCT', $lang, '../')?></th><th><?php echo __('FAMILY', $lang, '../')?></th><th><?php echo __('PRICE AVG', $lang, '../')?></th><th><?php echo __('ADD TO MACHINES', $lang, '../')?></th></tr>
-	<?php
-		foreach($productos as $producto){
-			echo "<tr><td><img src='$producto[foto_th]'/></td>
-			<td> $producto[producto]</td>
-			<td>$producto[familia]</td>
-			<td>$producto[PVP]</td>";
-			echo "<td><p><select id='$producto[id]' class='form-control'>";
-			$maquinas=query("SELECT m.id, m.nombre FROM v_maquinas as m, v_dispositivo as d, v_user as u
-				WHERE m.dispositivoid = d.id AND d.userid = u.id AND u.usuario = 'inaki'", $basededatos, $con);
-			$con++;
-			foreach ($maquinas as $m) {
-				echo "<option value='$m[id]'>$m[nombre]</option>";
-			}
-			echo "</select></p>";
-			?>
-			<p><input type="button" class="btn btn-info" onclick="addtomach(<?php echo $producto['id']; ?>)" value="<?php echo __('ADD', $lang, '../')?>" /></p>
-			<?php
-			echo "</td></tr>";
-		}
-		$basededatos = null; #cerramos la conexión
-	 ?>
+			<?php include ("./methods/tabla_productos.php"); ?>
 		</table>
-    </div>
+  </div>
 
 <?php require ("s_footer.php"); ?>

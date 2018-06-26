@@ -82,10 +82,13 @@
 	        <label for="familia"><?php echo __('Family', $lang, '../') ?></label>
 	        <select class="form-control" id="familia" name="familia">
 	          <option value="" selected="selected">- <?php echo __('select', $lang, '../') ?> -</option>
-	          <!--<option value="windows">Windows</option>
-	          <option value="mac">Mac</option>
-	          <option value="linux">Linux</option>
-	          <option value="otro">Otro</option>-->
+<?php
+						$basededatos = conectardb();
+						$familias = query("SELECT DISTINCT familia FROM v_productos WHERE familia <> 'INTERNA'", $basededatos, 1);
+						foreach ($familias as $row) {
+							echo "<option value='$row[familia]'>$row[familia]</option>";
+						}
+?>
 	        </select>
 				</div>
 	      <div class="form-group">
@@ -152,12 +155,11 @@
 		$values .= "'".$_POST["familia"]."')";
 		if ($correcto) {
 			$query .= $values.";";
-			$basededatos = conectardb();
-			execute($query, $basededatos, 1);
+			execute($query, $basededatos, 2);
 	  	echo "<h3>".__('Product added correctly', $lang, '../')."</h3>";
-			$basededatos = null; //cerramos conexion
 		}
   }
+	$basededatos = null; //cerramos conexion
 ?>
 
 		</div>
