@@ -64,6 +64,7 @@
 			<th onclick="filtro('l.calle')"><?php echo __('ZONE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th><?php echo __('MACHINE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th></th>
+			<th></th>
 		</tr>
 <?php
 		foreach($dispositivos as $dispositivo)
@@ -95,7 +96,8 @@
 			<img src='../img/listacarga.png' height='30' width='30' alt="<?php echo __('Loadign list', $lang, $pre.'../'); ?>"
 				title="<?php echo __('Loading list', $lang, $pre.'../'); ?>"
 				onclick="abrir('s_listacarga.php?id=<?php echo $maquina['id']; ?>')" />
-		</td></tr>
+		</td>
+	</tr>
 <?php
 	}
 

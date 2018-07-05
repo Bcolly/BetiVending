@@ -17,7 +17,7 @@
 					<select class="form-control" id="familia" name="familia">
 					  <option value="" selected="selected">- <?php echo __('select', $lang, '../') ?> -</option>
 <?php
-						$familias = query("SELECT DISTINCT familia FROM v_productos WHERE familia <> 'INTERNA'", $basededatos, $con);
+						$familias = query("SELECT DISTINCT familia FROM v_productos WHERE familia <> 'INTERNA' AND familia <> ''", $basededatos, $con);
 						$con++;
 						foreach ($familias as $row) {
 							echo "<option value='$row[familia]'>$row[familia]</option>";

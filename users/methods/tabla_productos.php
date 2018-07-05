@@ -50,6 +50,6 @@
         echo "</td>
           </tr>";
       }
-      $basededatos = null; #cerramos la conexión
+      $basededatos = null; //cerramos la conexión
 ?>
     </table>
