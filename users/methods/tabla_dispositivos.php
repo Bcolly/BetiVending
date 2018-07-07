@@ -6,7 +6,7 @@
 		$pre = "../";
 	} else $pre = "";
 
-		$usuario=$_SESSION["user"];
+		$userid=$_SESSION["userid"];
 
 		if (!isset($_SESSION["dispord"])){
 			$_SESSION["dispord"] = "-";
@@ -25,21 +25,19 @@
 			}
 		}
 
+		$query = "SELECT d.*, l.calle, l.ruta FROM v_locales as l, v_dispositivo as d ";
+
 		if (isset($_GET["disp"]) && !isset($_GET["zona"]))
-			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
-			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and d.nombre LIKE '%$_GET[disp]%'";
+			$query.="WHERE d.userid = $userid and l.id = d.idlocal and d.nombre LIKE '%$_GET[disp]%'";
 
 		elseif (!isset($_GET["disp"]) && isset($_GET["zona"]))
-			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
-			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and l.calle LIKE '%$_GET[zona]%'";
+			$query.="WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and l.calle LIKE '%$_GET[zona]%'";
 
 		elseif (isset($_GET["disp"]) && isset($_GET["zona"]))
-			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
-			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and l.calle LIKE '%$_GET[zona]%' and d.nombre LIKE '%$_GET[disp]%'";
+			$query.="WHERE d.userid = $userid and l.id = d.idlocal and l.calle LIKE '%$_GET[zona]%' and d.nombre LIKE '%$_GET[disp]%'";
 
 		else
-			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
-			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal";
+			$query.="WHERE d.userid = $userid and l.id = d.idlocal";
 
 		if (strcmp($_SESSION["dispord"], "-") != 0) {
 			$query .= " ORDER BY $_SESSION[dispord]";
@@ -61,6 +59,7 @@
 			<th><?php echo __('HOUR', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th><?php echo __('DEVICE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th>IP</th>
+			<th onclick="filtro('l.ruta')"><?php echo __('RUTE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th onclick="filtro('l.calle')"><?php echo __('ZONE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th><?php echo __('MACHINE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th></th>
@@ -70,7 +69,7 @@
 		foreach($dispositivos as $dispositivo)
 			mostrardisp($dispositivo);
 
-		$basededatos = null; #cerramos la conexión
+		$basededatos = null; //cerramos la conexión
 ?>
 	</table>
 <?php
@@ -82,6 +81,7 @@
 		<td class='text-warning' > $dispositivo[hora]</td>
 		<td><a href='dispositivo.php?OBJ=".serialize($dispositivo)."'>$a</a></td>
 		<td><a href='http://$dispositivo[IPpublica]' target='new'>$dispositivo[IPpublica]</a></td>
+		<td>". __($dispositivo['ruta'], $lang, $pre.'../') ."</td>
 		<td>". __($dispositivo['calle'], $lang, $pre.'../') ."</td>";
 
 		$maquinas=query("SELECT * FROM v_maquinas WHERE dispositivoid=$dispositivo[id]", $basededatos, $con);

@@ -51,6 +51,7 @@ if (isset($_GET['id']) && isset($_GET['sel'])){
 						}
 ?>
 					  </datalist>
+					</input>
 					</p>
 					<p>
 						<?php echo __('Sell-by-date', $lang, '../') ?> (yyyy/mm/dd):<br/><input type="number" name="year" min=<?php echo (new DateTime)->format("Y"); ?> /><b>/</b>

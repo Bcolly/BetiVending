@@ -6,14 +6,14 @@
 				<div class="form-group">
 					<div>
 						<label for="vista"><?php echo __('See', $lang, '../') ?> : </label>
-						<select class="form-control" id="vista" name="vista" onchange="cargarGrafo()">
+						<select class="form-control" id="vista" name="vista" onchange="cargarGrafoMaq()">
 						  <option value="ventas" selected="selected"><?php echo __('Sales', $lang, '../') ?></option>
 							<option value="ganancias"><?php echo __('Earnings', $lang, '../') ?></option>
 						</select>
 					</div>
 					<div style='margin: 5px;'>
 						<label for="maquinas"><?php echo __('Machines', $lang, '../') ?> : </label>
-						<select class="form-control" id="maquinas" name="maquinas" onchange="cargarGrafo()">
+						<select class="form-control" id="maquinas" name="maquinas" onchange="cargarGrafoMaq()">
 <?php
 						$con = 1;
 						$basededatos=conectardb();
@@ -33,20 +33,41 @@
 				</div>
 			</form>
 		</div>
+		<div id="grprod" class="col col-md-3" style="display: none">
+			<form class="navbar-form navbar-left">
+				<div class="form-group">
+					<div>
+						<label for="productos"><?php echo __('Product', $lang, '../') ?> : </label>
+						<input list="product" name="product">
+					  	<datalist id="product">
+<?php
+							$basededatos = conectardb();
+							$productos = query("SELECT * FROM v_productos WHERE producto LIKE '%$_GET[prod]%'", $basededatos, 1);
+
+							foreach ($productos as $p){
+								echo "<option value='$p[producto]'>";
+							}
+?>
+					  	</datalist>
+						</input>
+					</div>
+				</div>
+			</form>
+		</div>
 		<div class="col col-md-4">
 			<form class="navbar-form navbar-left">
 				<label for="otros"><?php echo __('Do you want to see anything else?', $lang, '../') ?></label>
 					<div class="btn-group">
-					 <button type="button" class="btn btn-success"><?php echo __('Machines', $lang, '../') ?></button>
-					 <button type="button" class="btn btn-success"><?php echo __('Products', $lang, '../') ?></button>
+					 <button type="button" class="btn btn-success" onclick="showgpr()"><?php echo __('Machines', $lang, '../') ?></button>
+					 <button type="button" class="btn btn-success" onclick="showgmq()"><?php echo __('Products', $lang, '../') ?></button>
 					</div>
 			</form>
 		</div>
 	</div>
 	<div class="row">
 		<canvas id="grafico">Su navegador no soporta Canvas.</canvas>
-		<script type="text/javascript" src="../js/graficos/prueba.js"></script>
-		<!--<script type="text/javascript" src="../js/graficos/canvas.js"></script>-->
+		<script type="text/javascript" src="../js/graficos/canvas.js"></script>
+
 <?php
 		$historico=query("SELECT fecha, ventas from v_historico
 		WHERE idmaquina = $fmaq ORDER BY fecha ASC LIMIT 32;", $basededatos, $con);
@@ -59,9 +80,23 @@
 		}
 		$stringdata = json_encode($data);
 ?>
+
 	</div>
 	<script type="text/javascript">
 		drawGrafo(<?php echo $stringdata; ?>, 'mes', '<?php echo __('Total sales of the machine this month', $lang, '../'); ?>');
+	</script>
+	<script>
+		function showgmq(){
+			document.getElementById("grprod").style.display="inline";
+			document.getElementById("grselet").style.display="none";
+			drawGrafo(<?php echo $stringdata; ?>, 'mes', '<?php echo __('Total sales of the machine this month', $lang, '../'); ?>');
+		}
+
+		function showgpr(){
+			document.getElementById("grprod").style.display="none";
+			document.getElementById("grselet").style.display="inline";
+			//drawGrafo(<?php echo $stringdata; ?>, 'mes', '<?php echo __('Total sales of the machine this month', $lang, '../'); ?>');
+		}
 	</script>
 
 <?php require ("s_footer.php"); ?>

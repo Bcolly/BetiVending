@@ -71,6 +71,22 @@ function prodfiltro() {
 	xhttp.open("GET",url+"users/methods/tabla_productos.php?"+res, true);
 	xhttp.send();
 }
+function filtroRut() {
+	var rut = document.getElementById("ruta").value;
+
+	var res = ""
+	if (rut != "") {
+		res= res+"rut="+rut;
+	}
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if ((xhttp.readyState==4)&&(xhttp.status==200)){
+			document.getElementById("tabla").innerHTML=xhttp.responseText;
+		}
+	};
+	xhttp.open("GET",url+"users/methods/tabla_maquinas.php?js=js&"+res, true);
+	xhttp.send();
+}
 
 function ocultar(id){
 	$('input[type=checkbox]').each(function() {
@@ -148,7 +164,6 @@ function addtomach(prod) {
 }
 
 function mostrarprod(prod){
-	alert();
 	xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function(){
 		if ((xhttp.readyState==4)&&(xhttp.status==200)){
@@ -158,4 +173,20 @@ function mostrarprod(prod){
 	};
 	xhttp.open("GET",url+"users/methods/lista_prod.php?prod="+prod, true);
 	xhttp.send();
+}
+
+function quitarRuta(idmaquina){
+	xhttp = new XMLHttpRequest();
+	xhttp.open("GET",url+"users/methods/quitarRuta.php?id="+idmaquina, true);
+	xhttp.send();
+	filtroRut();
+}
+
+function cambiaRuta(){
+	var idmaquina = document.getElementById('mid').value;
+	var idruta = document.getElementById('sruta').value;
+	xhttp = new XMLHttpRequest();
+	xhttp.open("GET",url+"users/methods/cambiarRuta.php?mid="+idmaquina+"&rid="+idruta, true);
+	xhttp.send();
+	filtroRut();
 }

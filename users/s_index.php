@@ -68,7 +68,7 @@
 				<div id="navbar" class="navbar-collapse collapse">
 					<form class="navbar-form navbar-left" role="form">
 						<!--<a href="s_maquinas.php">-->
-						<a href="s_listadispositivos.php">
+						<a href="s_listamaquinas.php">
 							<button type="button" class="btn btn-success"><?php echo __('Machines', $lang, '../') ?></button>
 						</a>
 						<a href="s_listaproductos.php">
