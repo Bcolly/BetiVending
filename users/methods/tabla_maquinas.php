@@ -19,10 +19,11 @@
 		$con=1;
 		$basededatos=conectardb();
 		$rutas=query($query, $basededatos, $con);
-		$con++;
+		$con++; //2
 
 		foreach ($rutas as $ruta) {
 ?>
+			<script src=<?php echo $pre; ?>"../js/locales_zonas.js"></script>
 			<div class="col col-md-2">
 				<table class="table table-striped">
 					<tr>
@@ -35,7 +36,7 @@
 					$maquinas=query("SELECT m.id, nombre
 						FROM (v_maquinas as m INNER JOIN v_user_maquinas as um ON m.id=um.maquinaid), v_locales as l
 						WHERE idlocal=l.id AND ruta='$ruta[ruta]' AND um.userid=$userid", $basededatos, $con);
-					$con++;
+					$con++; //3
 					foreach ($maquinas as $maquina) {
 ?>
 					<tr>
@@ -69,8 +70,12 @@
 					foreach ($msr as $maquina) {
 ?>
 						<tr>
-							<td><a href='s_maquina.php?OBJ=<?php echo $maquina["id"] ?>'><?php echo $maquina["nombre"] ?></a></td>
-							<td></td>
+							<td><a href='s_maquina.php?OBJ=$maquina["id"]'><?php echo $maquina["nombre"] ?></a></td>
+							<td>
+								<img src='../img/addbutton.png' height='20' width='20' alt="<?php echo __('Delete', $lang, $pre.'../'); ?>"
+									title="<?php echo __('Add zone', $lang, $pre.'../'); ?>"
+									onclick="addZone(<?php echo $maquina["id"] ?>)" />
+							</td>
 						</tr>
 <?php
 					}
@@ -78,57 +83,37 @@
 				</table>
 			</div>
 <?php
-			$rutas=query($query, $basededatos, $con);
-			$con++;
+			$rutas=query("SELECT DISTINCT ruta FROM v_locales WHERE userid=$userid", $basededatos, $con);
+			$con++; //4
 ?>
-			<div class="col col-md-4" id="formsruta">
+			<div class="popUp" id="formsruta">
 				<form class="navbar-form navbar-left" role="form" method="POST">
-					<h3><?php echo __('Select route', $lang, '../'); ?></h3>
+					<h3><?php echo __('Select route for', $lang, $pre.'../'); ?></h3>
 					<div class="form-group">
 						<input type="hidden" id="mid"/>
 						<select class="form-control" id="sruta" name="sruta">
 <?php
 						foreach ($rutas as $ruta) {
-							echo "<option value='$ruta[id]'>$ruta[ruta]</option>";
+							echo "<option value='$ruta[ruta]'>$ruta[ruta]</option>";
 						}
 ?>
 						</select>
 					</div>
-					<button type="button" class="btn btn-success" onclick="cambiaRuta()">
-						<?php echo __('ADD', $lang, '../'); ?></button>
+					<button type="button" class="btn btn-success" onclick="addZone2(sruta.value)">
+						<?php echo __('ADD', $lang, $pre.'../'); ?></button>
+				</form>
+			</div>
+			<div class="popUp" id="formsruta2" style="display:none">
+				<form class="navbar-form navbar-left" role="form" method="POST">
+					<h3><?php echo __('Select route', $lang, $pre.'../'); ?></h3>
+					<div class="form-group">
+						<select class="form-control" id="sruta2" name="sruta"></select>
+					</div>
+					<button type="button" class="btn btn-success" onclick="addZone3(mid.value, sruta2.value)">
+						<?php echo __('ADD', $lang, $pre.'../'); ?></button>
 				</form>
 			</div>
 
-<?php
-			$rutas=query($query, $basededatos, $con);
-			$con++;
-			$maquinas=query("SELECT id, nombre FROM v_maquinas INNER JOIN v_user_maquinas ON id=maquinaid
-				WHERE userid=$userid", $basededatos, $con);
-			$con++;
-?>
-			<div class="col col-md-4" id="formsmaquina">
-				<form class="navbar-form navbar-left" role="form" method="POST">
-					<h3><?php echo __('Select route and machine', $lang, '../'); ?></h3>
-					<div class="form-group">
-						<select class="form-control" id="smaquina" name="smaquina">
-<?php
-						foreach ($maquinas as $m) {
-							echo "<option value='$m[id]'>$m[nombre]</option>";
-						}
-?>
-						</select>
-						<b> <?php echo __('to', $lang, '../'); ?> </b>
-						<select class="form-control" id="sruta" name="sruta">
-<?php
-						foreach ($rutas as $ruta) {
-							echo "<option value='$ruta[id]'>$ruta[ruta]</option>";
-						}
-?>
-						</select>
-					</div>
-					<button type="button" class="btn btn-success" onclick=""><?php echo __('ADD', $lang, '../') ?></button>
-				</form>
-			</div>
 <?php
 			$basededatos = null; //cerramos la conexión
 ?>

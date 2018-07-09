@@ -2,12 +2,12 @@
 <?php
 $con = 1;
 $basededatos=conectardb();
-$dispositivos=query("SELECT d.*, l.calle 
+$dispositivos=query("SELECT d.*, l.calle
 	FROM v_locales as l, v_user as u, v_dispositivo as d
 	WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal;", $basededatos, $con);
 $con++;
 ?>
-    <h3><?php echo __('List of connected devices', $lang, '../') ?>: </h3>
+  <h3><?php echo __('List of connected devices', $lang, '../') ?>: </h3>
 	<form class="navbar-form navbar-left" role="form" method="POST">
 		<div class="form-group">
 			<label for="dispositivo"><?php echo __('DEVICE', $lang, '../') ?>: </label>

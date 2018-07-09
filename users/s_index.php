@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="../css/main.css">
+		<link rel="stylesheet" href="../css/modal.css">
     <link rel="stylesheet" href="../css/bootstrap_wizard.css">
 		<script src="../js/ajax.js"></script>
 		<script type="text/javascript" src="../js/jquery-1.12.0.min.js"></script>
