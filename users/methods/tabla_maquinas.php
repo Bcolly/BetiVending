@@ -29,7 +29,9 @@
 					<tr>
 						<th><?php echo $ruta["ruta"]; ?></th>
 						<th>
-
+							<img src='../img/listacarga.png' height='20' width='20' alt="<?php echo __('Loadign list', $lang, $pre.'../'); ?>"
+								title="<?php echo __('Loading list', $lang, $pre.'../'); ?>"
+								onclick="abrir('s_listacargaruta.php?ruta=<?php echo $ruta["ruta"]; ?>', 750)" />
 						</th>
 					</tr>
 <?php

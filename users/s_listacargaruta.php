@@ -1,7 +1,10 @@
 <?php include_once("../lang/language.php"); ?>
 <?php require_once ("seguridad.php"); ?>
 <?php require_once ("../conexion.php"); ?>
-<?php $id = $_GET['id']; ?>
+<?php
+			$ruta = $_GET['ruta'];
+			$userid=$_SESSION["userid"];
+?>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -51,9 +54,35 @@
 <?php
           $con = 1;
           $basededatos = conectardb();
-          $sql=query("SELECT nombre FROM v_maquinas WHERE id=$id", $basededatos, $con);
+          $sql=query("SELECT v_maquinas.id, nombre FROM v_maquinas INNER JOIN v_locales ON idlocal=v_locales.id
+						WHERE ruta='$ruta' AND userid=$userid", $basededatos, $con);
           $con++;
-          echo __("Loading list", $lang, "../").' of <b>'.$sql->fetch()['nombre'].'</b>';
+          echo '<p>'.__("Loading list", $lang, "../").' of <b>'.$ruta.'</b></p>';
+					echo '<p>'.__("See machines of route", $lang, "../");
+					$productos = [];
+					foreach ($sql as $row) {
+						echo ' '."<a href='s_listacarga.php?id=$row[id]'>$row[nombre]</a>";
+						$pm=query("SELECT id, producto, ean1, ean2, familia, (max-cantidad) as falta
+						FROM (v_productos_seleccion INNER JOIN v_productos ON idproducto=id)
+							NATURAL JOIN v_seleccion
+							WHERE idmaquina=$row[id] AND producto != 'carril vacio';", $basededatos, $con);
+						$con++;
+						foreach ($pm as $p) {
+							$idp = $p["id"];
+							if (!isset($productos["$idp"])){
+								$productos["$idp"] = [
+									"producto" => $p["producto"],
+									"ean1" => $p["ean1"],
+									"ean2" => $p["ean2"],
+									"familia" => $p["familia"],
+									"falta" => $p["falta"]
+								];
+							} else {
+								$productos["$idp"]["falta"] += $p["falta"];
+							}
+						}
+					}
+					echo '</p>';
 ?>
         </h3>
         <table id="tabla" class="table table-striped">
@@ -65,12 +94,6 @@
       			<th><?php echo __('NEEDED', $lang, '../') ?><span class="caret" style="visibility: collapse;"/></th>
       		</tr>
 <?php
-          $productos=query("SELECT producto, ean1, ean2, familia, (max-cantidad) as falta
-          FROM (v_productos_seleccion INNER JOIN v_productos ON idproducto=id)
-            NATURAL JOIN v_seleccion
-          	WHERE idmaquina=$id AND producto != 'carril vacio' ;", $basededatos, $con);
-          $con++;
-
           foreach ($productos as $p) {
             echo "<tr>
                     <td>$p[producto]</td>";

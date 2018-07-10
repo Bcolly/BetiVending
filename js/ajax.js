@@ -104,8 +104,8 @@ function grabar(){
 	});
 }
 
-function abrir(u) {
-	window.open(u,'new_window','top=200,left=200,width=650,height=600');
+function abrir(u, width = 650, height = 600) {
+	window.open(u,'new_window','top=200,left=200,width='+width+',height='+height);
 }
 
 function limpiar(id){
