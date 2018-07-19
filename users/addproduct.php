@@ -43,8 +43,10 @@ if (isset($_GET['id']) && isset($_GET['sel'])){
 						<input list="product" name="product">
 					  <datalist id="product">
 <?php
+						$con = 1;
 						$basededatos = conectardb();
-						$productos = query("SELECT * FROM v_productos WHERE producto LIKE '%$_GET[prod]%'", $basededatos, 1);
+						$productos = query("SELECT * FROM v_productos WHERE producto LIKE '%$_GET[prod]%'", $basededatos, $con);
+						$con++;
 
 						foreach ($productos as $p){
 							echo "<option value='$p[producto]'>";
@@ -85,7 +87,6 @@ if (isset($_POST['product'])){
 		$query = "INSERT into v_productos_seleccion (idmaquina, sel, idproducto, cantidad)
 		values ($_POST[maquina],'$_POST[seleccion]',(SELECT id FROM v_productos WHERE producto='$_POST[product]'), $_POST[cant])";
 	}
-	$con = 1;
 	execute($query, $basededatos, $con);
 	$con++;
 
