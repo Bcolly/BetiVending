@@ -72,6 +72,25 @@ function prodfiltro() {
 	xhttp.send();
 }
 
+function filtrolocal(direccion, ruta) {
+	var res = ""
+	if (direccion != "") {
+		res= res+"dir="+direccion;
+	}
+	if (ruta != "") {
+		if (res != "") { res = res+"&"; }
+		res = res+"ruta="+ruta;
+	}
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if ((xhttp.readyState==4)&&(xhttp.status==200)){
+			document.getElementById("tabla").innerHTML=xhttp.responseText;
+		}
+	};
+	xhttp.open("GET",url+"users/methods/tabla_locales.php?js=js&"+res, true);
+	xhttp.send();
+}
+
 function ocultar(id){
 	$('input[type=checkbox]').each(function() {
 		if ($(this).prop("id") != "ocultos") {

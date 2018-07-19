@@ -4,7 +4,7 @@ $con = 1;
 $basededatos=conectardb();
 $dispositivos=query("SELECT d.*, l.calle
 	FROM v_locales as l, v_user as u, v_dispositivo as d
-	WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal;", $basededatos, $con);
+	WHERE d.userid = $userid and l.id = d.idlocal;", $basededatos, $con);
 $con++;
 ?>
   <h3><?php echo __('List of connected devices', $lang, '../') ?>: </h3>

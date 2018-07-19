@@ -6,7 +6,7 @@
 		$pre = "../";
 	} else $pre = "";
 
-		$usuario=$_SESSION["user"];
+		$userid=$_SESSION["userid"];
 
 		if (!isset($_SESSION["dispord"])){
 			$_SESSION["dispord"] = "-";
@@ -25,21 +25,15 @@
 			}
 		}
 
+		$query="SELECT d.*, l.calle FROM v_locales as l INNER JOIN v_dispositivo as d ON d.idlocal=l.id WHERE d.userid = 1";
 		if (isset($_GET["disp"]) && !isset($_GET["zona"]))
-			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
-			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and d.nombre LIKE '%$_GET[disp]%'";
+			$query.=" and d.nombre LIKE '%$_GET[disp]%'";
 
 		elseif (!isset($_GET["disp"]) && isset($_GET["zona"]))
-			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
-			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and l.calle LIKE '%$_GET[zona]%'";
+			$query.=" and l.calle LIKE '%$_GET[zona]%'";
 
 		elseif (isset($_GET["disp"]) && isset($_GET["zona"]))
-			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
-			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal and l.calle LIKE '%$_GET[zona]%' and d.nombre LIKE '%$_GET[disp]%'";
-
-		else
-			$query="SELECT d.*, l.calle FROM v_locales as l, v_user as u, v_dispositivo as d
-			WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal";
+			$query.=" and l.calle LIKE '%$_GET[zona]%' and d.nombre LIKE '%$_GET[disp]%'";
 
 		if (strcmp($_SESSION["dispord"], "-") != 0) {
 			$query .= " ORDER BY $_SESSION[dispord]";
@@ -49,7 +43,6 @@
 		}
 
 		$query .= ';';
-
 		$con=1;
 		$basededatos=conectardb();
 		$dispositivos=query($query, $basededatos, $con);

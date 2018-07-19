@@ -15,6 +15,7 @@
 	}
 	else $ACC = null;
 	$usuario=$_SESSION["user"];
+	$userid=$_SESSION["userid"];
 ?>
 
 <!doctype html>
@@ -49,10 +50,8 @@
 		<!-- MENU AJUSTES -->
 		<div id="ajustes" class="sidenav">
 		  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		  <a href="#">Esto</a>
-		  <a href="#">Es</a>
-		  <a href="#">Un</a>
-		  <a href="#">Ejemplo</a>
+			<a href="s_users.php"><?php echo __('Users', $lang, '../') ?></a>
+			<a href=""><?php echo __('Stores', $lang, '../') ?></a>
 		</div>
 		<!-- MENU SUPERIOR -->
 		<nav id='supmenu' class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="z-index:1">
@@ -79,10 +78,7 @@
 							<button type="button" class="btn btn-default"><?php echo __('Stadistics', $lang, '../') ?></button>
 						</a>
 						<a href="s_locales.php">
-							<button type="button" class="btn btn-default"><?php echo __('Stores', $lang, '../') ?></button>
-						</a>
-						<a href="s_users.php">
-							<button type="button" class="btn btn-default"><?php echo __('Users', $lang, '../') ?></button>
+							<button type="button" class="btn btn-default"><?php echo __('Shops', $lang, '../') ?></button>
 						</a>
 					</form>
 					<form class="navbar-form navbar-right" role="form" action="../control.php" method="POST">

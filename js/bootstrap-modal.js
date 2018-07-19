@@ -1,24 +1,20 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="en" class=" is-copy-enabled is-u2f-enabled">
   <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#">
     <meta charset='utf-8'>
-    
+
 
     <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/frameworks-b94ec35a696398c8a00f27343992e597c93faadce7783164f7f8967248cc818f.css" integrity="sha256-uU7DWmljmMigDyc0OZLll8k/qtzneDFk9/iWckjMgY8=" media="all" rel="stylesheet" />
     <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/github-a6be22a2877ee0ae350520df78941ecf7599019b31fded938ef98cd11d20ae48.css" integrity="sha256-pr4iood+4K41BSDfeJQez3WZAZsx/e2TjvmM0R0grkg=" media="all" rel="stylesheet" />
-    
-    
+
+
     <link crossorigin="anonymous" href="https://assets-cdn.github.com/assets/site-9e0f35305336555b58884b07a160747fc1f6dbd79e13e18820a598a9abcb2662.css" integrity="sha256-ng81MFM2VVtYiEsHoWB0f8H229eeE+GIIKWYqavLJmI=" media="all" rel="stylesheet" />
-    
+
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
     <meta name="viewport" content="width=device-width">
-    
+
     <title>bootstrap-modal/bootstrap-modal.js at master · jschr/bootstrap-modal · GitHub</title>
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
     <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
@@ -39,9 +35,9 @@
       <meta name="browser-stats-url" content="https://api.github.com/_private/browser/stats">
     <meta name="browser-errors-url" content="https://api.github.com/_private/browser/errors">
     <link rel="assets" href="https://assets-cdn.github.com/">
-    
+
     <meta name="pjax-timeout" content="1000">
-    
+
     <meta name="request-id" content="C2B322DA:2D65:10311AA5:586616A3" data-pjax-transient>
 
     <meta name="msapplication-TileImage" content="/windows-tile.png">
@@ -74,9 +70,9 @@
     <meta name="html-safe-nonce" content="0fd0757573bb286c668c3aad6b579d7ebb59e2c8">
 
     <meta http-equiv="x-pjax-version" content="7ba6f19241d05790c9f4e68b535d48b3">
-    
 
-      
+
+
   <meta name="description" content="bootstrap-modal - Extends the default Bootstrap Modal class. Responsive, stackable, ajax and more.">
   <meta name="go-import" content="github.com/jschr/bootstrap-modal git https://github.com/jschr/bootstrap-modal.git">
 
@@ -92,9 +88,9 @@
     <div id="js-pjax-loader-bar" class="pjax-loader-bar"><div class="progress"></div></div>
     <a href="#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
 
-    
-    
-    
+
+
+
 
 
 
@@ -162,11 +158,11 @@
     <div role="main">
         <div itemscope itemtype="http://schema.org/SoftwareSourceCode">
     <div id="js-repo-pjax-container" data-pjax-container>
-      
+
 <div class="pagehead repohead instapaper_ignore readability-menu experiment-repo-nav">
   <div class="container repohead-details-container">
 
-    
+
 
 <ul class="pagehead-actions">
 
@@ -224,7 +220,7 @@
 
   </div>
   <div class="container">
-    
+
 <nav class="reponav js-repo-nav js-sidenav-container-pjax"
      itemscope
      itemtype="http://schema.org/BreadcrumbList"
@@ -281,17 +277,17 @@
 <div class="container new-discussion-timeline experiment-repo-nav">
   <div class="repository-content">
 
-    
+
 
 <a href="/jschr/bootstrap-modal/blob/3a1aed346aa00a8aea81a9e167fc54a2ac8fb252/js/bootstrap-modal.js" class="d-none js-permalink-shortcut" data-hotkey="y">Permalink</a>
 
 <!-- blob contrib key: blob_contributors:v21:3c686f8031c0b9f4de69f88be0827937 -->
 
 <div class="file-navigation js-zeroclipboard-container">
-  
+
 <div class="select-menu branch-select-menu js-menu-container js-select-menu float-left">
   <button class="btn btn-sm select-menu-button js-menu-target css-truncate" data-hotkey="w"
-    
+
     type="button" aria-label="Switch branches or tags" tabindex="0" aria-haspopup="true">
     <i>Branch:</i>
     <span class="js-select-button css-truncate-target">master</span>
@@ -502,7 +498,7 @@ rewrote tab function">from montrezorro/master</a>
   </div>
 </div>
 
-  
+
 
   <div itemprop="text" class="blob-wrapper data type-javascript">
       <table class="highlight tab-size js-file-line-container" data-tab-size="8">
@@ -2156,7 +2152,7 @@ rewrote tab function">from montrezorro/master</a>
 
 
 
-    
+
 
     <div id="ajax-error-message" class="ajax-error-message flash flash-error">
       <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"/></svg>
@@ -2167,13 +2163,13 @@ rewrote tab function">from montrezorro/master</a>
     </div>
 
 
-      
+
       <script crossorigin="anonymous" integrity="sha256-O3ZfG1WTdLV/rzgVoYbzz8OvBdJ34HyTxqPmJFhbkZY=" src="https://assets-cdn.github.com/assets/frameworks-3b765f1b559374b57faf3815a186f3cfc3af05d277e07c93c6a3e624585b9196.js"></script>
       <script async="async" crossorigin="anonymous" integrity="sha256-0ZAdzbA8tlXNsp4GA4r8cp1HAVLefQYMGwxuuRNvcRQ=" src="https://assets-cdn.github.com/assets/github-d1901dcdb03cb655cdb29e06038afc729d470152de7d060c1b0c6eb9136f7114.js"></script>
-      
-      
-      
-      
+
+
+
+
     <div class="js-stale-session-flash stale-session-flash flash flash-warn flash-banner d-none">
       <svg aria-hidden="true" class="octicon octicon-alert" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M8.865 1.52c-.18-.31-.51-.5-.87-.5s-.69.19-.87.5L.275 13.5c-.18.31-.18.69 0 1 .19.31.52.5.87.5h13.7c.36 0 .69-.19.86-.5.17-.31.18-.69.01-1L8.865 1.52zM8.995 13h-2v-2h2v2zm0-3h-2V6h2v4z"/></svg>
       <span class="signed-in-tab-flash">You signed in with another tab or window. <a href="">Reload</a> to refresh your session.</span>
@@ -2191,4 +2187,3 @@ rewrote tab function">from montrezorro/master</a>
 
   </body>
 </html>
-

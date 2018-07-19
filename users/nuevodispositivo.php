@@ -14,14 +14,14 @@ switch ($step) {
 		break;
     case "step2":
 		$a2='active';
-		break;	
+		break;
     case "step3":
 		$a3='active';
 		break;
     case "step4":
 		$a4='active';
-		break;		
-	}		
+		break;
+	}
 ?>
 <div class="container">
 	<div class="row">
@@ -61,7 +61,8 @@ switch ($step) {
                 </ul>
             </div>
 				<div class="container">
-                        <?php
+<?php
+            $basededatos=conectardb();
 						switch ($step) {
 							case "step1":
 									$m1=step1($basededatos);
@@ -74,8 +75,8 @@ switch ($step) {
 									echo "<input type='hidden' name='step' value='step3'>";
 									echo "<li><a href='nuevodispositivo.php?step=step1' class='btn btn-primary active' role='button'>ANTERIOR</a></li>";
 									echo "<li><a href='nuevodispositivo.php?step=step3' class='btn btn-primary ".$m2."' role='button'>SIGUIENTE</a></li>";
-									break;	
-									
+									break;
+
 							case "step3":
 									$m3=step3($_SESSION['iden'], $basededatos);
 									echo "<ul class='list-inline pull-right'>";
@@ -83,17 +84,17 @@ switch ($step) {
 									echo "<li><a href='nuevodispositivo.php?step=step2&iden=$_SESSION[iden]' class='btn btn-primary active' role='button'>ANTERIOR</a></li>";
 									echo "<li><a href='nuevodispositivo.php?step=step4' class='btn btn-primary active' role='button'>".$m3."</a></li>";
 									break;
-									
+
 							case "step4":
 									step4();
 									echo "<ul class='list-inline pull-right'>";
 									echo "<input type='hidden' name='step' value='step3'>";
 									echo "<li><a href='nuevodispositivo.php?step=step3' class='btn btn-primary active' role='button'>ANTERIOR</a></li>";
-									break;		
+									break;
 						}
 									echo "<li><a href='s_listadispositivos.php' class='btn btn-primary active' role='button'>Volver al listado</a></li>";
 									echo "</ul>";
-                        ?>
+?>
                 </div>
         </div>
     </section>

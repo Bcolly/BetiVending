@@ -9,7 +9,7 @@
 		WHERE d.userid = u.id and u.usuario = '$usuario' and l.id = d.idlocal;", $basededatos, $con);
 	$con++;
 
-	$rutas=query("SELECT DISTINCT ruta FROM v_locales WHERE userid=$userid", $basededatos, $con);
+	$rutas=query("SELECT DISTINCT ruta FROM v_locales WHERE userid=$userid AND ruta IS NOT NULL", $basededatos, $con);
 	$con++;
 	$maquinas=query("SELECT id, nombre FROM v_maquinas INNER JOIN v_user_maquinas ON id=maquinaid
 		WHERE userid=$userid", $basededatos, $con);
@@ -25,7 +25,7 @@
 				<button type="button" class="btn btn-success" onclick="filtroRut()"><?php echo __('FILTER', $lang, '../') ?></button>
 			</form>
 		</div>
-		<div class="col col-md-5 col-md-offset-3">
+		<div class="col col-md-6 col-md-offset-2">
 			<form class="navbar-form navbar-left" role="form" method="POST">
 				<b><?php echo __('Add route', $lang, '../'); ?></b>
 				<div class="form-group">
@@ -48,24 +48,23 @@
 				<button type="button" class="btn btn-success" onclick="addPZone(aruta.value)"><?php echo __('ADD', $lang, '../') ?></button>
 			</form>
 		</div>
-	</div>
-	<div class="row">
-  	<h3><?php echo __('Machine list by route', $lang, '../') ?>: </h3>
-	</div>
-	<div class="row">
-		<div id="tabla">
-			<?php include("methods/tabla_maquinas.php"); ?>
-	  </div>
-	</div>
-	<div class="popUp" id="formsrutab2">
-		<form class="navbar-form navbar-left" role="form" method="POST">
-			<h3><?php echo __('Select route', $lang, $pre.'../'); ?></h3>
-			<div class="form-group">
-				<select class="form-control" id="srutab2" name="srutba"></select>
-			</div>
-			<button type="button" class="btn btn-success" onclick="addZone3(amaquina.value, srutab2.value)">
-				<?php echo __('ADD', $lang, $pre.'../'); ?></button>
-		</form>
-	</div>
+		<div class="row">
+	  	<h3><?php echo __('Machine list by route', $lang, '../') ?>: </h3>
+		</div>
+		<div class="row">
+			<div id="tabla">
+				<?php include("methods/tabla_maquinas.php"); ?>
+		  </div>
+		</div>
+		<div class="popUp" id="formsrutab2">
+			<form class="navbar-form navbar-left" role="form" method="POST">
+				<h3><?php echo __('Select route', $lang, $pre.'../'); ?></h3>
+				<div class="form-group">
+					<select class="form-control" id="srutab2" name="srutba"></select>
+				</div>
+				<button type="button" class="btn btn-success" onclick="addZone3(amaquina.value, srutab2.value)">
+					<?php echo __('ADD', $lang, $pre.'../'); ?></button>
+			</form>
+		</div>
 
 <?php require ("s_footer.php"); ?>

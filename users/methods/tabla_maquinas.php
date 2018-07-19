@@ -8,7 +8,7 @@
 
 		$userid=$_SESSION["userid"];
 
-		$query = "SELECT DISTINCT ruta FROM v_locales WHERE userid = $userid ";
+		$query = "SELECT DISTINCT ruta FROM v_locales WHERE userid = $userid AND ruta IS NOT NULL";
 
 		if (isset($_GET["rut"])){
 				$query .= " AND ruta LIKE '%$_GET[rut]%'";
