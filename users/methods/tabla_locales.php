@@ -17,7 +17,8 @@
 		if (isset($_GET["ruta"]))
 			$aux .= " AND l.ruta LIKE '%$_GET[ruta]%'";
 
-		$query .= $aux."
+		$query .= $aux." GROUP BY l.id
+
 		UNION
 
 		SELECT DISTINCT *, 0 as maquinas

@@ -57,6 +57,7 @@
 			<th onclick="filtro('l.calle')"><?php echo __('ZONE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th><?php echo __('MACHINE', $lang, $pre.'../') ?><span class="caret" style="visibility: collapse;" onclick="filtro()"/></th>
 			<th></th>
+			<th></th>
 		</tr>
 <?php
 		foreach($dispositivos as $dispositivo)

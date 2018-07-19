@@ -53,7 +53,7 @@
           $basededatos = conectardb();
           $sql=query("SELECT nombre FROM v_maquinas WHERE id=$id", $basededatos, $con);
           $con++;
-          echo __("Loading list", $lang, "../").' of <b>'.$sql->fetch()['nombre'].'</b>';
+          echo __("Loading list of", $lang, "../").': <b>'.$sql->fetch()['nombre'].'</b>';
 ?>
         </h3>
         <table id="tabla" class="table table-striped">
