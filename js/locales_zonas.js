@@ -18,6 +18,7 @@ function filtroRut() {
 	xhttp.send();
 }
 
+
 function addZone(id){
   document.getElementById("mid").value=id;
 	document.getElementById("formsruta2").style.display="none";
@@ -25,7 +26,18 @@ function addZone(id){
 }
 
 function addZone2(rut){
-	document.getElementById("sruta2").innerHTML=cargaLocales(rut);
+	var seleccion = document.getElementById("sruta2");
+	var str = cargaLocales(rut);
+	var opciones = str.split("*/*");
+	for (var i=0; i < opciones.length-1; i++) {
+		var op = opciones[i].split("@*");
+		var num = parseInt(op[0]);
+		var txt = op[1];
+		var option = document.createElement("option");
+		option.value = num;
+		option.text = txt;
+		seleccion.add(option, i);
+	}
 	document.getElementById("formsruta").style.display="none";
   document.getElementById("formsruta2").style.display="inline";
 }
@@ -41,7 +53,18 @@ function addZone3(mid, loc){
 }
 
 function addPZone(rut){
-	document.getElementById("srutab2").innerHTML=cargaLocales(rut);
+	var seleccion = document.getElementById("srutab2");
+	var str = cargaLocales(rut);
+	var opciones = str.split("*/*");
+	for (var i=0; i < opciones.length-1; i++) {
+		var op = opciones[i].split("@*");
+		var num = parseInt(op[0]);
+		var txt = op[1];
+		var option = document.createElement("option");
+		option.value = num;
+		option.text = txt;
+		seleccion.add(option, i);
+	}
   document.getElementById("formsrutab2").style.display="inline";
 }
 
@@ -51,6 +74,7 @@ function cargaLocales(rut){
 	xhttp.onreadystatechange = function(){
 		if ((xhttp.readyState==4)&&(xhttp.status==200)){
 			res = xhttp.responseText;
+			return res;
 		}
 	};
 	xhttp.open("GET",url+"users/methods/locales_Ruta.php?rut="+rut, false);

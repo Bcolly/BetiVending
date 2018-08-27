@@ -10,17 +10,17 @@ $a1=$a2=$a3=$a4="disabled";
 
 switch ($step) {
     case "step1":
-		$a1='active';
-		break;
+  		$a1='active';
+  		break;
     case "step2":
-		$a2='active';
-		break;
+  		$a2='active';
+  		break;
     case "step3":
-		$a3='active';
-		break;
+  		$a3='active';
+  		break;
     case "step4":
-		$a4='active';
-		break;
+  		$a4='active';
+  		break;
 	}
 ?>
 <div class="container">

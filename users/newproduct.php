@@ -95,7 +95,7 @@
 	        <label for="file-input"><?php echo __('Photo', $lang, '../') ?> : </label>
 	        <input type="file" accept="image/*" onchange="loadFile(event)" name="file-input"/>
 	      </div>
-				<button type="submit" class="btn btn-default" name="submit" value=""><?php echo __('Send', $lang) ?></button>
+				<button type="submit" class="btn btn-default" name="submit" value=""><?php echo __('Send', $lang, '../') ?></button>
 				<input type="button" class="btn btn-default" value="<?php echo __('Close', $lang, '../') ?>" onclick="cerrar()" />
 	  	</form>
 	    <div>

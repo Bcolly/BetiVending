@@ -72,9 +72,9 @@
 					foreach ($msr as $maquina) {
 ?>
 						<tr>
-							<td><a href='s_maquina.php?OBJ=$maquina["id"]'><?php echo $maquina["nombre"] ?></a></td>
+							<td><a href='s_maquina.php?OBJ=<?php echo $maquina["id"]; ?>'><?php echo $maquina["nombre"] ?></a></td>
 							<td>
-								<img src='../img/addbutton.png' height='20' width='20' alt="<?php echo __('Delete', $lang, $pre.'../'); ?>"
+								<img src='../img/addbutton.png' height='20' width='20' alt="<?php echo __('Add route', $lang, $pre.'../'); ?>"
 									title="<?php echo __('Add zone', $lang, $pre.'../'); ?>"
 									onclick="addZone(<?php echo $maquina["id"] ?>)" />
 							</td>
@@ -90,7 +90,7 @@
 ?>
 			<div class="popUp" id="formsruta">
 				<form class="navbar-form navbar-left" role="form" method="POST">
-					<h3><?php echo __('Select route for', $lang, $pre.'../'); ?></h3>
+					<h3><?php echo __('Select route', $lang, $pre.'../'); ?></h3>
 					<div class="form-group">
 						<input type="hidden" id="mid"/>
 						<select class="form-control" id="sruta" name="sruta">

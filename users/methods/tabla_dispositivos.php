@@ -25,7 +25,7 @@
 			}
 		}
 
-		$query="SELECT d.*, l.calle FROM v_locales as l INNER JOIN v_dispositivo as d ON d.idlocal=l.id WHERE d.userid = 1";
+		$query="SELECT d.*, l.calle FROM v_locales as l INNER JOIN v_dispositivo as d ON d.idlocal=l.id WHERE d.userid = $userid";
 		if (isset($_GET["disp"]) && !isset($_GET["zona"]))
 			$query.=" and d.nombre LIKE '%$_GET[disp]%'";
 
@@ -80,10 +80,11 @@
 		$maquinas=query("SELECT * FROM v_maquinas WHERE dispositivoid=$dispositivo[id]", $basededatos, $con);
 		$con++;
 
-		echo "<td>";
-		foreach ($maquinas as $maquina)
-			mostrarmaq($maquina);
-		echo "<td/>";
+		if ($maquinas->rowCount() > 0){
+			echo "<td>";
+			foreach ($maquinas as $maquina)
+				mostrarmaq($maquina);
+			echo "<td/>";
 ?>
 		<td>
 			<img src='../img/listacarga.png' height='30' width='30' alt="<?php echo __('Loadign list', $lang, $pre.'../'); ?>"
@@ -91,6 +92,9 @@
 				onclick="abrir('s_listacarga.php?id=<?php echo $maquina['id']; ?>')" />
 		</td></tr>
 <?php
+		} else {
+			echo "<td><a href='s_maquina_nueva.php?dnm=$dispositivo[id]'>".__('Add new machine', $lang, $pre.'../')."</a></td><td><td>";
+		}
 	}
 
 	function mostrarmaq($maquina){

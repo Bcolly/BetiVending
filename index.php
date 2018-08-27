@@ -1,4 +1,16 @@
-<?php require('lang/language.php'); ?>
+<?php
+//Inicio la sesión
+session_start();
+//COMPRUEBA QUE EL USUARIO ESTA AUTENTIFICADO
+if (isset($_SESSION["user"])) {
+    //si existe, se envia a la página de usuario
+    header("Location: users/s_listadispositivos.php");
+    //ademas se cierra el script
+    exit();
+}
+
+require('lang/language.php'); ?>
+
 <!doctype html>
 <html class="no-js" lang=""> <!--<![endif]-->
   <head>
@@ -51,10 +63,10 @@
 			<div id="navbar" class="navbar-collapse collapse">
 				<form class="navbar-form navbar-right" role="form" action="control.php" method="POST">
 					<div class="form-group">
-						<input type="text" placeholder="Email" class="form-control" name="user">
+						<input type="text" placeholder="<?php echo __('Email', $lang) ?>" class="form-control" name="user">
 					</div>
 					<div class="form-group">
-						<input type="password" placeholder="Password" class="form-control" name="psw">
+						<input type="password" placeholder="<?php echo __('Password', $lang) ?>" class="form-control" name="psw">
 					</div>
 					<button type="submit" class="btn btn-success" name="ACC" value="ENTRAR"><?php echo __('Log in', $lang) ?></button>
 					<button type="submit" class="btn btn-success" name="ACC" value="REGISTRARSE"><?php echo __('Sign up', $lang) ?></button>
@@ -80,7 +92,7 @@
       <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container">
           <div class="navbar-inner navbar-content-center" id="cookie_accept">
-            <a onclick="closeCookiebar()" class="btn btn-default pull-right">Close</a>
+            <a onclick="closeCookiebar()" class="btn btn-default pull-right"><?php echo __('Close', $lang) ?></a>
             <p class="text-muted credit">
               <?php echo __('By using our website you are consenting to our use of cookies in accordance with our <a href="/cookies">cookie policy</a>.', $lang) ?>
             </p>

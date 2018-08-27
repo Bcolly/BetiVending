@@ -35,6 +35,7 @@
 		<link rel="stylesheet" href="../css/modal.css">
     <link rel="stylesheet" href="../css/bootstrap_wizard.css">
 		<script src="../js/ajax.js"></script>
+		<script src="../js/filtro.js"></script>
 		<script type="text/javascript" src="../js/jquery-1.12.0.min.js"></script>
 		<script type="text/javascript" src="../js/graficos/Chart.bundle.min.js"></script>
 		<script>
@@ -52,6 +53,8 @@
 		  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<a href="s_users.php"><?php echo __('Users', $lang, '../') ?></a>
 			<a href=""><?php echo __('Stores', $lang, '../') ?></a>
+			<a href="bajas.php"><?php echo __('Drop devices/machines', $lang, '../') ?></a>
+			<a href="s_ajustes.php"><?php echo __('Change password', $lang, '../') ?></a>
 		</div>
 		<!-- MENU SUPERIOR -->
 		<nav id='supmenu' class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="z-index:1">

@@ -42,7 +42,7 @@
           $sql=query("SELECT v_maquinas.id, nombre FROM v_maquinas INNER JOIN v_locales ON idlocal=v_locales.id
 						WHERE ruta='$ruta' AND userid=$userid", $basededatos, $con);
           $con++;
-          echo '<p>'.__("Loading list", $lang, "../").' of <b>'.$ruta.'</b></p>';
+          echo '<p>'.__("Loading list of", $lang, "../").' <b>'.$ruta.'</b></p>';
 					echo '<p>'.__("See machines of route", $lang, "../");
 					$productos = [];
 					foreach ($sql as $row) {

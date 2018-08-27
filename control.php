@@ -55,13 +55,12 @@ function entrar(){
 	$passcript=sha1($_POST["psw"]);
 	$sql=query("SELECT * FROM v_user WHERE mail = '$_POST[user]' AND passwd = '$passcript'", $basededatos, 1);
 
-	foreach ($sql as $row) {
-		if ($_POST["user"]==$row['mail'] && $passcript==$row['passwd']){
-			$_SESSION["user"]= $row['usuario'];
-			$_SESSION["userid"]= $row['id'];
-			header ("Location: ./users/s_listadispositivos.php");
-			exit();
-		}
+	$row = $sql -> fetch();
+	if ($_POST["user"]==$row['mail'] && $passcript==$row['passwd']){
+		$_SESSION["user"]= $row['usuario'];
+		$_SESSION["userid"]= $row['id'];
+		header ("Location: ./users/s_listadispositivos.php");
+		exit();
 	}
 	$basededatos = null;
 	header ("Location: index.php");

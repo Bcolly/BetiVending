@@ -1,10 +1,25 @@
-<?php require ("s_index.php"); ?>
-<?php
+<?php require ("s_index.php");
+
+//SELECT userid FROM v_maquinas as m INNER JOIN v_dispositivo as d on d.id=m.dispositivoid WHERE userid=1 AND m.id=2
+
 $id = -1;
 if (isset($_GET["OBJ"])) $id=$_GET["OBJ"];
 
 $con = 1;
 $basededatos=conectardb();
+$sql=query("SELECT userid
+						FROM v_maquinas as m INNER JOIN v_dispositivo as d on d.id=m.dispositivoid
+						WHERE userid=$userid AND m.id=$id",
+	$basededatos, $con);
+
+if ($sql->rowCount() < 1) {
+    //si no existe, se envia a la página de autentificacion
+    echo "<script> location.href='../index.php'; </script>";
+    //ademas se cierra el script
+    exit();
+}
+
+
 $maquina = comprobar_maquina($id);
 if ($maquina != null) { ?>
 	<h3><b><?php echo __('Machine', $lang, '../')?>: </b><?php 	echo $maquina["nombre"]; ?></h3>
@@ -123,8 +138,8 @@ include_once ("s_footer.php"); ?>
 			</td>
 			<td><?php echo $sel['uDEXprecio']; ?></td>
 			<td>
-				<input type='number' style="width:30%;" id='cantidad_sel' name='cantidad_sel' value='0' min='0' max='<?php echo $sel['max']-$producto['cantidad']; ?>'/>
-				<button type='button' class='btn btn-success' onclick="llenar(<?php echo $id; ?>,'<?php echo $sel['sel']; ?>', document.getElementById('cantidad_sel').value);" >+</button>
+				<input type='number' id='cantidad_sel_<?php echo $sel['sel']; ?>' name='cantidad_sel_<?php echo $sel['sel']; ?>' value='<?php echo $producto['cantidad']; ?>' min='0' max='<?php echo $sel['max']; ?>'/>
+				<button type='button' class='btn btn-success' onclick="llenar(<?php echo $id; ?>,'<?php echo $sel['sel']; ?>', cantidad_sel_<?php echo $sel['sel']; ?>.value)" >+</button>
 			</td>
 			<td><?php echo $sel['max']-$producto['cantidad']; ?></td>
 			<td><?php echo $producto['tiempo']; ?></td>

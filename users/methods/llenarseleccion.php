@@ -3,7 +3,7 @@
 
 	if (isset($_GET['id']) && isset($_GET['sel'])){
 		if ($_GET['cant'] >= 0){
-			llenarsel($_GET['id'], $_GET['sel'], $_GET['cantidad']);
+			llenarsel($_GET['id'], $_GET['sel'], $_GET['cant']);
 		}
 	} elseif (isset($_GET['id']) && isset($_GET['all'])){
 			llenarmaquina($_GET['id']);
