@@ -49,10 +49,10 @@ $con++;
 						<label for="dispositivo"><?php echo __('DEVICE', $lang, '../') ?>: </label>
 						<input type="text" class="form-control" id="dispositivo" name="dispositivo">
 					</div>
-					<button type="button" class="btn btn-success" onclick="filtro()"><?php echo __('FILTER', $lang, '../') ?></button>
+					<button type="button" class="btn btn-success" onclick="filtrobajadisp()"><?php echo __('FILTER', $lang, '../') ?></button>
 				</form>
 				<br/><br/><br/>
-				<div class="pre-scrollable" data-spy="scroll" data-target=".table" id="tabla">
+				<div class="pre-scrollable" data-spy="scroll" data-target=".table" id="tabladis">
 					<?php include("methods/baja_dispositivos.php"); ?>
 			  </div>
 			</div>
@@ -63,10 +63,10 @@ $con++;
 						<label for="maquina"><?php echo __('MACHINE', $lang, '../') ?>: </label>
 						<input type="text" class="form-control" id="maquina" name="maquina">
 					</div>
-					<button type="button" class="btn btn-success" onclick="filtro()"><?php echo __('FILTER', $lang, '../') ?></button>
+					<button type="button" class="btn btn-success" onclick="filtrobajamaq()"><?php echo __('FILTER', $lang, '../') ?></button>
 				</form>
 				<br/><br/><br/>
-				<div class="pre-scrollable" data-spy="scroll" data-target=".table" id="tabla">
+				<div class="pre-scrollable" data-spy="scroll" data-target=".table" id="tablamaq">
 					<?php include("methods/baja_maquinas.php"); ?>
 			  </div>
 			</div>

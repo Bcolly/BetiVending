@@ -54,29 +54,29 @@
 	  	<form class="container" enctype="multipart/form-data" method="POST" onsubmit="return comprobarNuevoProducto(this.product.value,
 			this.ean1.value, this.ean2.value, this.precio.value, this.oferta.value, this.familia.value)">
 	      <div class="form-group">
-					<label for="nombre"><?php echo __('Product name', $lang) ?></label>
+					<label for="nombre"><?php echo __('Product name', $lang, '../') ?></label>
 					<input type="text" class="form-control" id="nombre" name="product" required
-						   placeholder="<?php echo __('Product name', $lang) ?>"/>
+						   placeholder="<?php echo __('Product name', $lang, '../') ?>"/>
 				</div>
 				<div class="form-group">
-					<label for="ean1"><?php echo __('Code1', $lang) ?></label>
+					<label for="ean1"><?php echo __('Code1', $lang, '../') ?></label>
 					<input type="text" class="form-control" id="ean1" name="ean1"
-						   placeholder="<?php echo __('Code1', $lang) ?>"/>
+						   placeholder="<?php echo __('Code1', $lang, '../') ?>"/>
 				</div>
 	      <div class="form-group">
-					<label for="ean2"><?php echo __('Code2', $lang) ?></label>
+					<label for="ean2"><?php echo __('Code2', $lang, '../') ?></label>
 					<input type="text" class="form-control" id="ean2" name="ean2"
-						   placeholder="<?php echo __('Code2', $lang) ?>"/>
+						   placeholder="<?php echo __('Code2', $lang, '../') ?>"/>
 				</div>
 				<div class="form-group">
-					<label for="precio"><?php echo __('Price', $lang) ?></label>
+					<label for="precio"><?php echo __('Price', $lang, '../') ?></label>
 					<input type="text" class="form-control" id="precio" name="precio"
-						   placeholder="<?php echo __('Price', $lang) ?>" pattern="^[0-9]{1,2}([.,][0-9]{1,2})?$"/>
+						   placeholder="<?php echo __('Price', $lang, '../') ?>" pattern="^[0-9]{1,2}([.,][0-9]{1,2})?$"/>
 				</div>
 				<div class="form-group">
-					<label for="oferta"><?php echo __('Discount price', $lang) ?></label>
+					<label for="oferta"><?php echo __('Discount price', $lang, '../') ?></label>
 					<input type="text" class="form-control" id="oferta" name="oferta"
-						   placeholder="<?php echo __('Discount price', $lang) ?>" pattern="^[0-9]{1,2}([.,][0-9]{1,2})?$"/>
+						   placeholder="<?php echo __('Discount price', $lang, '../') ?>" pattern="^[0-9]{1,2}([.,][0-9]{1,2})?$"/>
 				</div>
 				<div class="form-group">
 	        <label for="familia"><?php echo __('Family', $lang, '../') ?></label>
@@ -104,10 +104,6 @@
 
 <?php
   if (isset($_POST['submit'])){
-		/*foreach($_POST as $campo => $valor)
-			echo "$campo -> $valor <br>";
-		foreach($_FILES as $campo => $valor)
-				echo "$campo -> ".print_r($valor)." <br>";*/
 		$query = "INSERT INTO v_productos (ean1, ean2, producto, PVP, PVPoferta, foto_th, familia) VALUES ";
 		$values = "(";
 		$correcto = true;

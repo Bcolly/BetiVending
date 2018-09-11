@@ -102,3 +102,37 @@ function filtrolocal(direccion, ruta) {
 	xhttp.open("GET",url+"users/methods/tabla_locales.php?js=js&"+res, true);
 	xhttp.send();
 }
+
+function filtrobajadisp() {
+	var d = document.getElementById("dispositivo").value;
+
+	var res = ""
+	if (d != "") {
+		res= res+"disp="+d;
+	}
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if ((xhttp.readyState==4)&&(xhttp.status==200)){
+			document.getElementById("tabladis").innerHTML=xhttp.responseText;
+		}
+	};
+	xhttp.open("GET",url+"users/methods/baja_dispositivos.php?js=js&"+res, true);
+	xhttp.send();
+}
+
+function filtrobajamaq() {
+	var m = document.getElementById("maquina").value;
+
+	var res = ""
+	if (m != "") {
+		res= res+"maq="+m;
+	}
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if ((xhttp.readyState==4)&&(xhttp.status==200)){
+			document.getElementById("tablamaq").innerHTML=xhttp.responseText;
+		}
+	};
+	xhttp.open("GET",url+"users/methods/baja_maquinas.php?js=js&"+res, true);
+	xhttp.send();
+}

@@ -51,8 +51,8 @@
 		<!-- MENU AJUSTES -->
 		<div id="ajustes" class="sidenav">
 		  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a href="s_users.php"><?php echo __('Users', $lang, '../') ?></a>
-			<a href=""><?php echo __('Stores', $lang, '../') ?></a>
+			<!--<a href="s_users.php"><?php echo __('Users', $lang, '../') ?></a>
+			<a href=""><?php echo __('Stores', $lang, '../') ?></a>-->
 			<a href="bajas.php"><?php echo __('Drop devices/machines', $lang, '../') ?></a>
 			<a href="s_ajustes.php"><?php echo __('Change password', $lang, '../') ?></a>
 		</div>

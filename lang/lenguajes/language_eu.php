@@ -123,7 +123,7 @@ $texts = array(
 'Link' => 'Esteka',
 'CAUTION' => 'KONTUZ',
 'YOU WILL DELETE THE DEVICE' => 'GAILU BAT EZABATUKO DUZU: ',
-'RETURN WITHOUT DELETE' => 'EZABATU GABE ITXULI',
+'RETURN WITHOUT DELETE' => 'EZABATU GABE ITZULI',
 'HIDE' => 'EZKUTATU',
 'Loading list of' => 'Ibilbidearen lista-karga',
 'See machines of route' => 'Ibilbide honen makinak ikusi',
@@ -141,6 +141,12 @@ $texts = array(
 'No' => 'Ez',
 'Change yor password' => 'Zure pasahitza aldatu',
 'New password' => 'Pasahitz berria',
-'Repeat new password' => 'Pasahitza berria errepikatu'
+'Repeat new password' => 'Pasahitza berria errepikatu',
+'Family' => 'Familia',
+'Product name' => 'Produktu izena',
+'Code1' => '1Kodea',
+'Code2' => '2Kodea',
+'Discount price' => 'Deskontu prezioa',
+'Photo' => 'Irudia'
 );
 ?>
