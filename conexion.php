@@ -42,4 +42,17 @@
 			exit;
 		}
 	}
+
+	function execute_expunge($q, $db, $stream, $nm, $con){
+		try{
+			$query = $db->prepare($q);
+			$query->execute();
+		}
+		catch (exception $e) {
+			echo "No se puede la consulta ".$con;
+			imap_delete($stream,$nm); //Marca el mail para ser borrado
+			imap_expunge($stream);    //Borra los mail marcados para borrar
+			exit;
+		}
+	}
 ?>

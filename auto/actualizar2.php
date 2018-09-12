@@ -41,16 +41,9 @@ if($stream){
 		$con++; //c2
 
 		if ($maquinas->rowCount() < 1) {
-			try{ //esta la hacemos a parte (sin metodo porque hace falta eliminar mensajes luego)
-				$sql = $basededatos->prepare("INSERT into v_maquinas (nombre, dispositivoid)
-				values ('$dispositivo',(SELECT id FROM v_dispositivo WHERE nombre='$dispositivo'))");
-				$sql->execute();
-			} catch (exception $e) {
-				imap_delete($stream,$nm);	// si algun email produce un error, este se borrara
-				imap_expunge($stream);	// para que a la siguente busqueda no haya errores
-				echo "No se puede la consulta $con";
-				exit;
-			}
+			execute_expunge("INSERT into v_maquinas (nombre, dispositivoid)
+				values ('$dispositivo',(SELECT id FROM v_dispositivo WHERE nombre='$dispositivo'))",
+			$basededatos, $stream, $nm, $con);
 			$con++; //c3
 			echo "grabada nueva maquina.<br/>";
 
@@ -58,12 +51,12 @@ if($stream){
 		}
 		$con = 4;
 		//ahora cogemos la id de la maquina que se va a utilizar para guardar datos
-		try{
+		//try{
 			$row = $maquinas->fetch();
-		} catch (exception $e) {
-			echo "No se puede la consulta $con";
-			exit;
-		}
+		//} catch (exception $e) {
+		//	echo "No se puede la consulta $con";
+		//	exit;
+		//}
 		$con++; //c5
 
 		$mensaje=imap_body($stream, $nm); //cogemos el cuerpo del mensaje $nm
