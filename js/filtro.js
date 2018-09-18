@@ -55,7 +55,7 @@ function ocultar(id){
 		if ($(this).prop("id") != "ocultos") {
 			res="id="+id+"&sel="+$(this).prop("id")+"&vis="+$(this).prop("checked");
 			xhttp = new XMLHttpRequest();
-			xhttp.open("GET",url+"users/methods/tabla_selecciones.php?"+res, true);
+			xhttp.open("GET",url+"users/methods/ocultar.php?"+res, true);
 			xhttp.send();
 		}
 	});

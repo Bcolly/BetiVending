@@ -21,11 +21,12 @@ function read_va1($sl) {
 }
 
 function read_pa1($sl) {
+  //echo "leyendo PA1<br/>";
   global $basededatos, $maquina, $lineas, $x;
   $con = 7;
 
   $linea=explode("*", $sl);
-  if (count($linea)==4) {
+  if (count($linea)==5) {
     $sel=substr($linea[1], 0, 3);
     $precio=$linea[2]/100;
     //comprobamos que la seleccion existe y sino la creamos
@@ -41,14 +42,15 @@ function read_pa1($sl) {
     }
     $PA2 = $lineas[++$x]; //nos pasamos a la siguiente linea que deberia contener el codigo PA2
     if(strstr($PA2, "PA2")) { //nos aseguramos que la linea es PA2
-      read_pa2($PA2, $con);
+      read_pa2($PA2, $con, $sel, $precio);
     }
   }
 }
 
-function read_pa2($PA2, $con) {
+function read_pa2($PA2, $con, $sel, $precio) {
+  //echo "leyendo PA2<br/>";
   global $basededatos, $fecha, $maquina;
-
+  global $stream, $nm;
   //echo $PA2."<br/>";
   //buscamos la ultima linea de la seleccion de una maquina
   $sql = query("SELECT sel, MAX(fecha) as fecha, unidades, beneficio
@@ -82,6 +84,7 @@ function read_pa2($PA2, $con) {
 }
 
 function read_ea1($sl) {
+  //echo "leyendo EA1<br/>";
   global $basededatos, $dispositivo, $maquina;
   $con = 12;
 
@@ -122,29 +125,35 @@ function read_ea1($sl) {
 }
 
 function read_ea2($sl) {
+  //echo "leyendo EA2<br/>";
   //TODO
 }
 
 function read_ca15($sl) {
+  //echo "leyendo CA15<br/>";
+  //echo $sl;
   global $basededatos, $maquina, $x;
   global $stream, $nm;
   $con = 15;
 
-  echo $sl."<br/>";
   $linea=explode("*", $sl);
   $error=$linea[0]."*".$linea[1];
   if ($error!="ERROR*CRC" && count($linea)>3) {
-    if ($linea[3]) $m5=$linea[3];
+    if (isset($linea[3]) && preg_match('/[0-9]+/', $linea[3], $match))
+      $m5=$linea[3];
     else $m5='NULL';
-    if ($linea[4]) $m10=$linea[4];
+    if (isset($linea[4]) && preg_match('/[0-9]+/', $linea[4], $match))
+      $m10=$linea[4];
     else $m10='NULL';
-    if ($linea[5]) $m20=$linea[5];
+    if (isset($linea[5]) && preg_match('/[0-9]+/', $linea[5], $match))
+      $m20=$linea[5];
     else $m20='NULL';
-    if ($linea[6]) $m50=$linea[6];
+    if (isset($linea[6]) && preg_match('/[0-9]+/', $linea[6], $match))
+      $m50=$linea[6];
     else $m50='NULL';
 
-    //echo "UPDATE v_maquinas SET m5c=$m5,m10c=$m10,m20c=$m20,m50c=$m50 WHERE id=$maquina<br/>";
-    execute_expunge("UPDATE v_maquinas SET m5c=$m5,m10c=$m10,m20c=$m20,m50c=$m50 WHERE id=$maquina",
+    //echo "UPDATE v_maquinas SET m5c=$m5, m10c=$m10, m20c=$m20, m50c=$m50 WHERE id=$maquina; <br/>";
+    execute_expunge("UPDATE v_maquinas SET m5c=$m5, m10c=$m10, m20c=$m20, m50c=$m50 WHERE id=$maquina",
     $basededatos, $stream, $nm, $con);
     $con++; //c16
     $x++;
@@ -152,6 +161,7 @@ function read_ca15($sl) {
 }
 
 function read_ca17($sl) {
+  //echo "leyendo CA17<br/>";
   global $basededatos, $maquina, $lineas, $x;
   $con = 16;
 

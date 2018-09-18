@@ -5,6 +5,24 @@
 			<form class="navbar-form navbar-left">
 				<div class="form-group">
 					<div>
+						<label for="mes"><?php echo __('Month', $lang, '../') ?> : </label>
+						<select class="form-control" id="mes" name="mes" onchange="cargarGrafoMaq()">
+<?php
+							$año = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+							$num = 1;
+							print_r($año);
+							foreach ($año as $mes) {
+								echo "<option value=$num";
+								if (getdate()["mon"] == $num)
+									echo " selected='selected'";
+
+								echo ">".__($mes, $lang, '../')."</option>";
+								$num++;
+							}
+?>
+						</select>
+					</div>
+					<div>
 						<label for="vista"><?php echo __('See', $lang, '../') ?> : </label>
 						<select class="form-control" id="vista" name="vista" onchange="cargarGrafoMaq()">
 						  <option value="ventas" selected="selected"><?php echo __('Sales', $lang, '../') ?></option>

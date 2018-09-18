@@ -4,20 +4,32 @@ function cargarGrafoMaq() {
   var vista = document.getElementById("vista").value;
   var maquina = document.getElementById("maquinas").value;
   if (vista == 'ventas')
-    var tit = 'Total sales of the machine this month';
+    var tit = 'Total sales of the machine on ';
   else
-    var tit = 'Total earnings of the machine this month';
+    var tit = 'Total earnings of the machine on ';
 
+    var rangoMes = true; //aqui despus se mirará si los datos a mirar son anuales o mensuales
+    var num;
+    var esc;
+    if (rangoMes) {
+      num = document.getElementById("mes").value;
+      esc = 'mes';
+      tit = tit+getMes(num);
+    } else {
+      num = document.getElementById("año").value;
+      esc = 'año';
+      tit = tit+num;
+    }
   xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function(){
 		if ((xhttp.readyState==4)&&(xhttp.status==200)){
       clear();
-			drawGrafo(JSON.parse(xhttp.responseText), 'mes', tit);
+			drawGrafo(JSON.parse(xhttp.responseText), esc, tit);
 		}
 	};
 	//esto hay que cambiarlo en el host
-	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista, true);
-	xhttp.open("GET","http://localhost/betiV/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista, true);
+	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista+"&"+esc+"="+num, true);
+	xhttp.open("GET","http://localhost/betiV/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista+"&"+esc+"="+num, true);
 	xhttp.send();
 }
 
@@ -25,20 +37,32 @@ function cargarGrafoProd() {
   var vista = document.getElementById("x").value;
   var maquina = document.getElementById("maquinas").value;
   if (vista == 'ventas')
-    var tit = 'Total sales of the machine this month';
+    var tit = 'Total sales of the machine on ';
   else
-    var tit = 'Total earnings of the machine this month';
+    var tit = 'Total earnings of the machine on ';
 
+  var rangoMes = true; //aqui despus se mirará si los datos a mirar son anuales o mensuales
+  var num;
+  var esc;
+  if (rangoMes) {
+    num = document.getElementById("mes").value;
+    esc = 'mes';
+    tit = tit+getMes(num);
+  } else {
+    num = document.getElementById("año").value;
+    esc = 'año';
+    tit = tit+num;
+  }
   xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function(){
 		if ((xhttp.readyState==4)&&(xhttp.status==200)){
       clear();
-			drawGrafo(JSON.parse(xhttp.responseText), 'mes', tit);
+			drawGrafo(JSON.parse(xhttp.responseText), esc, tit);
 		}
 	};
 	//esto hay que cambiarlo en el host
-	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista, true);
-	xhttp.open("GET","http://localhost/betiV/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista, true);
+	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista+"&"+esc+"="+num, true);
+	xhttp.open("GET","http://localhost/betiV/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista+"&"+esc+"="+num, true);
 	xhttp.send();
 }
 
@@ -99,13 +123,15 @@ function crearDataSetMes(l){
   var antv = 0;
 
   for (i=0; i<lista.length; i++) {
-    var d = lista[i].split(":");
-    var date = d[0].substring(1, d[0].length-1);
-    var day = parseInt(date.substring(8));
-    var vent = parseInt(d[1].substring(1, d[1].length-1));
-    var cant = vent - antv;
-    antv = vent;
-    datasetdata[day-1] = cant;
+    if (lista[i]) {
+      var d = lista[i].split(":");
+      var date = d[0].substring(1, d[0].length-1);
+      var day = parseInt(date.substring(8));
+      var vent = parseInt(d[1].substring(1, d[1].length-1));
+      var cant = vent - antv;
+      antv = vent;
+      datasetdata[day-1] = cant;
+    }
   }
 
   var dataset = {
@@ -139,4 +165,9 @@ function clear() {
 
 function diasDelMes(month, year) {
   return new Date(year || new Date().getFullYear(), month, 0).getDate();
+}
+
+function getMes(num){
+  var mes = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return mes[num-1];
 }
