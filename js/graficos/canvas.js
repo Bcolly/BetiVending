@@ -127,8 +127,8 @@ function crearDataSetMes(l){
       var d = lista[i].split(":");
       var date = d[0].substring(1, d[0].length-1);
       var day = parseInt(date.substring(8));
-      var vent = parseInt(d[1].substring(1, d[1].length-1));
-      var cant = vent - antv;
+	  var vent = parseInt(d[1]);
+	  var cant = vent - antv;
       antv = vent;
       datasetdata[day-1] = cant;
     }

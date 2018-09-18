@@ -87,15 +87,35 @@
 		<script type="text/javascript" src="../js/graficos/canvas.js"></script>
 
 <?php
-		$historico=query("SELECT fecha, ventas from v_historico
-		WHERE idmaquina = $fmaq ORDER BY fecha ASC LIMIT 32;", $basededatos, $con);
+		$mes = date("n");
+		$año = date ("Y");
+		
+		$anterior=query("SELECT fecha, ventas from v_historico
+		WHERE idmaquina = $fmaq AND (MONTH(fecha)<$mes OR YEAR(fecha)<$año) ORDER BY fecha DESC LIMIT 1;", $basededatos, $con);
+		$con++;
 
-		while($row = $historico->fetch()) {
-			if (empty($data))
-				$data = [$row['fecha'] => $row['ventas']];
-			else
-				$data += [$row['fecha'] => $row['ventas']];
+		$minus=0;
+		if($anterior->rowCount() > 0) {
+			$ant = $anterior->fetch();
+			$minus = $ant['ventas'];
 		}
+		
+		$historico=query("SELECT fecha, ventas from v_historico
+		WHERE idmaquina = $fmaq AND MONTH(fecha)=$mes AND YEAR(fecha)=$año ORDER BY fecha ASC LIMIT 32;", $basededatos, $con);
+
+		$data = array();
+		if ($historico->rowCount() > 0){
+		  while($row = $historico->fetch()) {
+			if ($minus > 0){
+				$row['ventas'] = $row['ventas']-$minus;
+			}
+			if (empty($data))
+			  $data = [$row['fecha'] => $row['ventas']];
+			else
+			  $data += [$row['fecha'] => $row['ventas']];
+		  }
+		}
+		
 		$stringdata = json_encode($data);
 ?>
 
