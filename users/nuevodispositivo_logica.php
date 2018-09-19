@@ -1,5 +1,6 @@
 <?php
 function step1($basededatos){
+  global $lang;
   $m1="disabled";
   $con = 1;
 	if (isset($_GET["iden"]))
@@ -40,33 +41,41 @@ function step1($basededatos){
 	  switch ($error) {
       case "enuso":
         echo "<br /><div class='alert alert-danger'>";
-			  echo "¡Atención! El identificador de dispositivo introducido \"$iden\" ya esta siendo utilizado. Debe elegir otro identificador";
+			  echo __("Attention! Entered device identifier: ", $lang, '../');
+        echo " ".$iden." ";
+        echo __("is already being used. You must choose another identifier", $lang, '../');
 			  echo "</div>";
         break;
       case "tamano":
         echo "<br /><div class='alert alert-danger'>";
-			  echo "¡Atención! El identificador debe tener entre 6 y 20 caracteres. El valor introducido (".$iden.") tiene ".strlen($iden)." caracteres ";
+			  echo __("Attention! The identifier must have between 6 and 20 characters. The value entered", $lang, '../');
+        echo " (".$iden.") ".__("has", $lang, '../')." ".strlen($iden)." ".__("character(s)", $lang, '../');
         echo "</div>";
         break;
       case "preparando":
         $m1="active";
         echo "<br /><div class='alert alert-success'>";
         $_SESSION['iden']=$iden;
-			  echo "¡Atención! El identificador  introducido (".$iden.") ya está en proceso de alta, pulse SIGUIENTE para el siguiente paso.";
+			 echo __("Attention! Entered device identifier: ", $lang, '../');
+        echo " (".$iden.") ";
+        echo __("is already in the process of registration, press NEXT for the next step", $lang, '../').".";
 			  echo "</div>";
 			  break;
 		  case "registrado":
         $m1="active";
         echo "<br /><div class='alert alert-success'>";
         $_SESSION['iden']=$iden;
-			  echo "¡Atención! El identificador  introducido (".$iden.") ya está en uso, pulse SIGUIENTE siguiente si quiere configurarlo.";
+			  echo __("Attention! Entered device identifier: ", $lang, '../');
+        echo " (".$iden.") ";
+        echo __("is already in use, press next NEXT if you want to configure it", $lang, '../').".";
 			  echo "</div>";
 	      break;
       case "NO":
         $m1="active";
 			  echo "<br /><div class='alert alert-success'>";
-    		echo "¡Bien! el identificador \"$iden\" ha sido registrarlo a su nombre. Ahora tiene 10 dìas para conectarlo a una red
-    		  WiFi y completar el segundo paso. Pulse \"SIGUIENTE\" para continuar...";
+    		echo __("Good! The identifier", $lang, '../');
+        echo " ".$iden." ";
+        echo __("has been registered in your name. Now you have 10 days to connect it to a WiFi network and complete the second step. Press NEXT to continue", $lang, '../');
     		echo "</div>";
     		$_SESSION['iden']=$iden;
     		$hoy=date("Y-m-d");
@@ -78,10 +87,9 @@ function step1($basededatos){
         $con++; //6
 	  }
 	  if ($m1!="active") {
-  		echo "<br /><h3>Introduzca el identificador unico de su dispositivo:</h3>";
-  		echo "<p>Con su dispositivo se le ha hecho entrega de un identificador único. Este identificador es como la matricula de su máquina, y sirve para diferenciarlo del resto de
-  		dispositivos en la red. </p><p>Si no dispone de un identificador por que esta utilizando un ordenador u otro dispositivo propio, puede inventarselo, comprobaremos que no exista otro
-  		dispositivo con el mismo identificador.</p>";
+  		echo "<br /><h3>".__("Enter the unique identifier of your device: ", $lang, '../')."</h3>";
+  		echo "<p>".__("With your device you have been given a unique identifier. This identifier is like the plate of your machine, and serves to differentiate it from other devices in the network", $lang, '../').".</p>
+      <p>".__("If you do not have an identifier because you are using a computer or other device of your own, you can invent it, we will check that there is no other device with the same identifier", $lang, '../').".</p>";
 ?>
 		<form class="form-inline" role="form" action="nuevodispositivo.php" method="GET">
 			<div class="form-group">
@@ -90,7 +98,7 @@ function step1($basededatos){
 				<input type="text" class="form-control" id="identificador"
 				placeholder="Introduce el identificador" name="iden"/>
 				</select>
-				<button type="submit" class="btn btn-primary" name="ACC" value="COMPROBAR">COMPROBAR</button>
+				<button type="submit" class="btn btn-primary" name="ACC" value="COMPROBAR"><?php echo __("CHECK", $lang, '../'); ?></button>
 			</div>
 		</form>
 		<br />
@@ -110,7 +118,7 @@ function step1($basededatos){
 					}
 ?>
 				</select>
-				<button type="submit" class="btn btn-primary" name="ACC" value="COMPROBAR">BUSCAR</button>
+				<button type="submit" class="btn btn-primary" name="ACC" value="COMPROBAR"><?php echo __("SEARCH", $lang, '../'); ?></button>
 			</div>
 		</form><br /><br />
 <?php
@@ -119,6 +127,7 @@ function step1($basededatos){
 } #end function step1
 
 function step2($iden, $basededatos){
+  global $lang;
 	$m2 = "disabled";
   $con= 1;
 	if (isset($_GET["ACC"]) AND $_GET["ACC"]=="BUSCAR") {
@@ -127,11 +136,15 @@ function step2($iden, $basededatos){
 
 		if ($dispositivos->rowCount() < 1) {
 			echo "<br /><div class='alert alert-danger'>";
-			echo "¡Atención! El dispositivo <b>$iden</b> que busca no ha enviado aun ninguna señal para iniciarse en el sistema.";
+			echo __("Attention! The device", $lang, '../');
+      echo " <b>$iden</b> ";
+      echo __("you are looking for has not sent any signal to start in the system yet", $lang, '../').".";
 			echo "</div>";
 		} else {
 			echo "<br /><div class='alert alert-success'>";
-			echo "¡Bien! el dispositivo \"$iden\" ha sido conectado a una red y esta enviando listo para funcionar.";
+			echo __("Good! The identifier", $lang, '../');
+      echo " ".$iden." ";
+      echo __("has been connected to a network and is sending it ready to work", $lang, '../').".";
 			echo "</div>";
       execute("UPDATE v_dispositivo SET tipo='$_GET[dispositivo]' WHERE nombre='$iden';", $basededatos, $con);
       $con++; //3
@@ -139,9 +152,9 @@ function step2($iden, $basededatos){
 			$m2="active";
 		}
 	}
-  echo"<p><h3>Instalación del dispositivo <b>$iden</b></h3></p>";
+  echo "<p><h3>".__("Installation of device:", $lang, '../')." <b>$iden</b></h3></p>";
  ?>
- 		<p><h3>Conecte el dispositivo a una red wifi y pulse "BUSCAR".</h3></p>
+ 		<p><h3><?php echo __('Connect the device to a wifi network and press "SEARCH"', $lang, '../'); ?>.</h3></p>
 		<form class="form-inline" role="form" action="nuevodispositivo.php" method="GET">
 			<div class="form-group">
 				<input type='hidden' name='step' value='step2'/>
@@ -151,11 +164,11 @@ function step2($iden, $basededatos){
 
         $row=$dispositivos->fetch();
 				if ($row["tipo"]) {
-					echo "<h4>El dispositivo $row[nombre] es del tipo $row[tipo]. Pulse CAMBIAR si no es correcto.</h4>";
+					echo "<h4>".__("The device $row[nombre] is of type $row[tipo]. Press CHANGE if it is not correct", $lang, '../').".</h4>";
 					$m2="active";
-					echo "<button type='submit' class='btn btn-primary' name='ACC' value='BUSCAR'>CAMBIAR</button>";
+					echo "<button type='submit' class='btn btn-primary' name='ACC' value='BUSCAR'>".__("CHANGE", $lang, '../')."</button>";
 				} else {	?>
-					<font size='5'><label class="label label-default" for="dispositivo">Seleccione el dispositivo:</label></font>
+					<font size='5'><label class="label label-default" for="dispositivo"><?php echo __("Select the device", $lang, '../'); ?>:</label></font>
 					<select name='dispositivo' class="form-control" id="dipositivo" onchange='mostrarText()'>
 					  <option value="Raspberry">Raspberry Pi</option>
 					  <option value="Orange">Orange Pi</option>
@@ -164,7 +177,7 @@ function step2($iden, $basededatos){
 					  <option value="PC">PC e-mail</option>
 					  <option value="Nayax">Nayax</option>
 					</select>
-					<button type="submit" class="btn btn-primary" name="ACC" value="BUSCAR">BUSCAR</button>
+					<button type="submit" class="btn btn-primary" name="ACC" value="BUSCAR"><?php echo __("SEARCH", $lang, '../'); ?></button>
 <?php
         }
 ?>
@@ -175,6 +188,7 @@ function step2($iden, $basededatos){
 } #end function step2
 
 function step3($iden, $basededatos){
+  global $lang;
 	$m3 = "GRABAR";
   $con = 1;
 ?>
@@ -223,6 +237,7 @@ function step3($iden, $basededatos){
 } #end function step3
 
  function step4(){
+ global $lang;
 ?>
 	<p><h3>Felicidades su dispositivo esta listo para mantenerle informado del estado de su maquina.</h3></p>
 	<p>Haga click en finalizar para volver al menu principal. Para poder gestionar sus dispositivos o maquinas nuevamente

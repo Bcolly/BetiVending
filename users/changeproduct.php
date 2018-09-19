@@ -13,12 +13,15 @@
 ?>
 <html>
 <head>
-	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+		<link rel="stylesheet" href="../css/main.css">
+		<link rel="stylesheet" href="../css/bootstrap_wizard.css">
     <style>
 			input[type=text] {
 				width: 200px;
@@ -27,11 +30,8 @@
 				width: 70px;
 			}
     </style>
-    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/bootstrap_wizard.css">
-	<script src="../js/ajax.js"></script>
-	<script src="../js/addproduct.js"></script>
+		<script src="../js/ajax.js"></script>
+		<script src="../js/addproduct.js"></script>
 	<script language="JavaScript">
 			function cerrar() {
 			ventana=window.self;
@@ -57,8 +57,8 @@ if (isset($_GET['id']) && isset($_GET['sel'])){
 					<p><?php echo __('Price', $lang, '../') ?>: <input type="number" step="0.05" name="price" min=0 value="<?php echo $row['uDEXprecio']; ?>" /></p>
 					<p><?php echo __('Max Cuantity', $lang, '../') ?>: <input type="number" name="max" min=1/></p>
 					<p>
-						<input type="submit" class="btn" value="<?php echo __('UPDATE', $lang, '../') ?>" />
-						<input type="button" class="btn" value="<?php echo __('CLOSE', $lang, '../') ?>" onclick="cerrar()"/>
+						<input type="submit" class="btn btn-info" value="<?php echo __('UPDATE', $lang, '../') ?>" />
+						<input type="button" class="btn btn-info" value="<?php echo __('CLOSE', $lang, '../') ?>" onclick="cerrar()"/>
 					</p>
 				</form>
 			</div>

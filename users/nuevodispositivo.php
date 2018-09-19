@@ -67,21 +67,21 @@ switch ($step) {
 							case "step1":
 									$m1=step1($basededatos);
 									echo "<ul class='list-inline pull-right'>";
-									echo "<li><a href='nuevodispositivo.php?step=step2' class='btn btn-primary ".$m1."' role='button'>SIGUIENTE</a></li>";
+									echo "<li><a href='nuevodispositivo.php?step=step2' class='btn btn-primary ".$m1."' role='button'>".__('NEXT', $lang, '../')."</a></li>";
 									break;
 							case "step2":
 									$m2=step2($_SESSION['iden'], $basededatos);
 									echo "<ul class='list-inline pull-right'>";
 									echo "<input type='hidden' name='step' value='step3'>";
-									echo "<li><a href='nuevodispositivo.php?step=step1' class='btn btn-primary active' role='button'>ANTERIOR</a></li>";
-									echo "<li><a href='nuevodispositivo.php?step=step3' class='btn btn-primary ".$m2."' role='button'>SIGUIENTE</a></li>";
+									echo "<li><a href='nuevodispositivo.php?step=step1' class='btn btn-primary active' role='button'>".__('PREVIOUS', $lang, '../')."</a></li>";
+									echo "<li><a href='nuevodispositivo.php?step=step3' class='btn btn-primary ".$m2."' role='button'>".__('NEXT', $lang, '../')."</a></li>";
 									break;
 
 							case "step3":
 									$m3=step3($_SESSION['iden'], $basededatos);
 									echo "<ul class='list-inline pull-right'>";
 									echo "<input type='hidden' name='step' value='step3'>";
-									echo "<li><a href='nuevodispositivo.php?step=step2&iden=$_SESSION[iden]' class='btn btn-primary active' role='button'>ANTERIOR</a></li>";
+									echo "<li><a href='nuevodispositivo.php?step=step2&iden=$_SESSION[iden]' class='btn btn-primary active' role='button'>".__('PREVIOUS', $lang, '../')."</a></li>";
 									echo "<li><a href='nuevodispositivo.php?step=step4' class='btn btn-primary active' role='button'>".$m3."</a></li>";
 									break;
 
@@ -89,10 +89,10 @@ switch ($step) {
 									step4();
 									echo "<ul class='list-inline pull-right'>";
 									echo "<input type='hidden' name='step' value='step3'>";
-									echo "<li><a href='nuevodispositivo.php?step=step3' class='btn btn-primary active' role='button'>ANTERIOR</a></li>";
+									echo "<li><a href='nuevodispositivo.php?step=step3' class='btn btn-primary active' role='button'>".__('PREVIOUS', $lang, '../')."</a></li>";
 									break;
 						}
-									echo "<li><a href='s_listadispositivos.php' class='btn btn-primary active' role='button'>Volver al listado</a></li>";
+									echo "<li><a href='s_listadispositivos.php' class='btn btn-primary active' role='button'>".__('Return to the list', $lang, '../')."</a></li>";
 									echo "</ul>";
 ?>
                 </div>

@@ -31,9 +31,10 @@ function comprobar(user, mail, psw1, psw2){
 		if (!bien) {
 			error +="</div>";
 			document.getElementById("error").innerHTML=error;
+			alert(error);
 		} else {
 			document.getElementById("error").innerHTML="";
 		}
-		alert(error);
+
 		return bien;
 }

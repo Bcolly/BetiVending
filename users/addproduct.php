@@ -4,22 +4,22 @@
 <html>
 <head>
 	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <style>
-				input[type=text] {
-					width: 200px;
-				}
-				input[type=number] {
-					width: 70px;
-				}
-    </style>
-    <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/bootstrap_wizard.css">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="../css/main.css">
+	<link rel="stylesheet" href="../css/bootstrap_wizard.css">
+  <style>
+			input[type=text] {
+				width: 200px;
+			}
+			input[type=number] {
+				width: 70px;
+			}
+  </style>
 	<script src="../js/ajax.js"></script>
 	<script language="JavaScript">
 			function cerrar() {
@@ -62,8 +62,8 @@ if (isset($_GET['id']) && isset($_GET['sel'])){
 					<p><?php echo __('Cuantity', $lang, '../') ?>: <input type="number" name="cant" min=0 value="0"/></p>
 					<p><?php echo __('Max Cuantity', $lang, '../') ?>: <input type="number" name="max" min=1/></p>
 					<p>
-						<input type="submit" value="<?php echo __('ADD', $lang, '../') ?>" />
-						<input type="button" value="<?php echo __('CLOSE', $lang, '../') ?>" onclick="cerrar()" />
+						<input class="btn btn-info" type="submit" value="<?php echo __('ADD', $lang, '../') ?>" />
+						<input class="btn btn-info" type="button" value="<?php echo __('CLOSE', $lang, '../') ?>" onclick="cerrar()" />
 					</p>
 				</form>
 			</div>
