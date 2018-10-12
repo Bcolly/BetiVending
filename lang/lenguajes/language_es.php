@@ -176,6 +176,10 @@ $texts = array(
 'PREVIOUS' => 'PREVIO',
 'Return to the list' => 'Volver a la lista',
 'CHECK' => 'COMPROBAR',
-'SEARCH' => 'BUSCAR'
+'SEARCH' => 'BUSCAR',
+'Month' => 'Mes',
+'LOW PRODUCTS' => 'PRODUCTOS AGOTANDOSE',
+'See by years' => 'Ver por años',
+'See by months' => 'Ver por meses'
 );
 ?>

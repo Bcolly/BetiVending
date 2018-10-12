@@ -187,6 +187,10 @@ $texts = array(
 'PREVIOUS' => 'ATZERA',
 'Return to the list' => 'Zerrendara bueltatu',
 'CHECK' => 'KONPROBATU',
-'SEARCH' => 'BILATU'
+'SEARCH' => 'BILATU',
+'Month' => 'Hilabatea',
+'LOW PRODUCTS' => 'PRODUKTUAK AGORTZEN',
+'See by years' => 'Urteka ikusi',
+'See by months' => 'Hilabeteka ikusi'
 );
 ?>

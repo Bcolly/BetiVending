@@ -5,12 +5,38 @@
 			<form class="navbar-form navbar-left">
 				<div class="form-group">
 					<div>
+<?php
+					$con = 1;
+					$basededatos=conectardb();
+					$vistames = true; // true si se vera el es, false para el año
+					if (isset($_GET['view']) && $_GET['view']== 'y'){
+						$vistames = false;
+?>
+						<button type="button" class="btn btn-success" onclick="location.href='?view=m';"><?php echo __('See by months', $lang, '../') ?></button><br/>
+						<label for="año"><?php echo __('Year', $lang, '../') ?> : </label>
+						<select class="form-control" id="año" name="año" onchange="cargarGrafoMaq(<?php echo $vistames; ?>)">
+<?php
+							$sql = query("SELECT DISTINCT YEAR(fecha) as y FROM v_historico NATURAL JOIN v_user_maquinas WHERE userid = $userid", $basededatos, $con);
+							$con++;
+							foreach ($sql as $año) {
+								echo "<option value=$año[y]";
+								if (getdate()["year"] == $año['y'])
+									echo " selected='selected'";
+
+								echo ">$año[y]</option>";
+							}
+?>
+						</select>
+<?php
+					}
+					else {
+?>
+						<button type="button" class="btn btn-success" onclick="location.href='?view=y';"><?php echo __('See by years', $lang, '../') ?></button><br/>
 						<label for="mes"><?php echo __('Month', $lang, '../') ?> : </label>
-						<select class="form-control" id="mes" name="mes" onchange="cargarGrafoMaq()">
+						<select class="form-control" id="mes" name="mes" onchange="cargarGrafoMaq(<?php echo $vistames; ?>)">
 <?php
 							$año = array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
 							$num = 1;
-							print_r($año);
 							foreach ($año as $mes) {
 								echo "<option value=$num";
 								if (getdate()["mon"] == $num)
@@ -21,20 +47,21 @@
 							}
 ?>
 						</select>
+<?php
+						}
+?>
 					</div>
 					<div>
 						<label for="vista"><?php echo __('See', $lang, '../') ?> : </label>
-						<select class="form-control" id="vista" name="vista" onchange="cargarGrafoMaq()">
+						<select class="form-control" id="vista" name="vista" onchange="cargarGrafoMaq(<?php echo $vistames; ?>)">
 						  <option value="ventas" selected="selected"><?php echo __('Sales', $lang, '../') ?></option>
 							<option value="ganancias"><?php echo __('Earnings', $lang, '../') ?></option>
 						</select>
 					</div>
 					<div style='margin: 5px;'>
 						<label for="maquinas"><?php echo __('Machines', $lang, '../') ?> : </label>
-						<select class="form-control" id="maquinas" name="maquinas" onchange="cargarGrafoMaq()">
+						<select class="form-control" id="maquinas" name="maquinas" onchange="cargarGrafoMaq(<?php echo $vistames; ?>)">
 <?php
-						$con = 1;
-						$basededatos=conectardb();
 						$maquinas=query("SELECT m.id, m.nombre
 														 FROM v_maquinas as m INNER JOIN v_dispositivo as d ON m.dispositivoid=d.id INNER JOIN v_user as u ON userid=u.id
 														 WHERE u.usuario = '$usuario';", $basededatos, $con);
@@ -72,7 +99,7 @@
 				</div>
 			</form>
 		</div>
-		<div class="col col-md-4">
+		<!--<div class="col col-md-4">
 			<form class="navbar-form navbar-left">
 				<label for="otros"><?php echo __('Do you want to see anything else?', $lang, '../') ?></label>
 					<div class="btn-group">
@@ -80,54 +107,22 @@
 					 <button type="button" class="btn btn-success" onclick="showgmq()"><?php echo __('Products', $lang, '../') ?></button>
 					</div>
 			</form>
-		</div>
+		</div>-->
 	</div>
 	<div class="row">
 		<canvas id="grafico">Su navegador no soporta Canvas.</canvas>
 		<script type="text/javascript" src="../js/graficos/canvas.js"></script>
-
-<?php
-		$mes = date("n");
-		$año = date ("Y");
-		
-		$anterior=query("SELECT fecha, ventas from v_historico
-		WHERE idmaquina = $fmaq AND (MONTH(fecha)<$mes OR YEAR(fecha)<$año) ORDER BY fecha DESC LIMIT 1;", $basededatos, $con);
-		$con++;
-
-		$minus=0;
-		if($anterior->rowCount() > 0) {
-			$ant = $anterior->fetch();
-			$minus = $ant['ventas'];
-		}
-		
-		$historico=query("SELECT fecha, ventas from v_historico
-		WHERE idmaquina = $fmaq AND MONTH(fecha)=$mes AND YEAR(fecha)=$año ORDER BY fecha ASC LIMIT 32;", $basededatos, $con);
-
-		$data = array();
-		if ($historico->rowCount() > 0){
-		  while($row = $historico->fetch()) {
-			if ($minus > 0){
-				$row['ventas'] = $row['ventas']-$minus;
-			}
-			if (empty($data))
-			  $data = [$row['fecha'] => $row['ventas']];
-			else
-			  $data += [$row['fecha'] => $row['ventas']];
-		  }
-		}
-		
-		$stringdata = json_encode($data);
-?>
-
 	</div>
+
 	<script type="text/javascript">
-		drawGrafo(<?php echo $stringdata; ?>, 'mes', '<?php echo __('Total sales of the machine this month', $lang, '../'); ?>');
+		drawGrafo("", 'mes', ""); //iniciamos el canvas
+		cargarGrafoMaq(<?php echo $vistames; ?>);
 	</script>
 	<script>
 		function showgmq(){
 			document.getElementById("grprod").style.display="inline";
 			document.getElementById("grselet").style.display="none";
-			drawGrafo(<?php echo $stringdata; ?>, 'mes', '<?php echo __('Total sales of the machine this month', $lang, '../'); ?>');
+			cargarGrafoMaq(<?php echo $vistames; ?>);
 		}
 
 		function showgpr(){

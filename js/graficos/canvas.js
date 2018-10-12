@@ -1,6 +1,6 @@
 var grafico;
 
-function cargarGrafoMaq() {
+function cargarGrafoMaq(m) { //m = boolean --> true = mes false = año
   var vista = document.getElementById("vista").value;
   var maquina = document.getElementById("maquinas").value;
   if (vista == 'ventas')
@@ -8,7 +8,7 @@ function cargarGrafoMaq() {
   else
     var tit = 'Total earnings of the machine on ';
 
-    var rangoMes = true; //aqui despus se mirará si los datos a mirar son anuales o mensuales
+    var rangoMes = m; //aqui despus se mirará si los datos a mirar son anuales o mensuales
     var num;
     var esc;
     if (rangoMes) {
@@ -27,6 +27,7 @@ function cargarGrafoMaq() {
 			drawGrafo(JSON.parse(xhttp.responseText), esc, tit);
 		}
 	};
+  //alert("http://localhost/betiV/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista+"&"+esc+"="+num);
 	//esto hay que cambiarlo en el host
 	//xhttp.open("GET","http://zurgaia.net/myvending/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista+"&"+esc+"="+num, true);
 	xhttp.open("GET","http://localhost/betiV/users/methods/estadisticas_lg.php?maq="+maquina+"&vista="+vista+"&"+esc+"="+num, true);
@@ -120,17 +121,14 @@ function crearDataSetMes(l){
   aux = aux.substring(1, aux.length-1);
   var lista = aux.split(",");
   var datasetdata = [];
-  var antv = 0;
 
   for (i=0; i<lista.length; i++) {
     if (lista[i]) {
       var d = lista[i].split(":");
       var date = d[0].substring(1, d[0].length-1);
       var day = parseInt(date.substring(8));
-	  var vent = parseInt(d[1]);
-	  var cant = vent - antv;
-      antv = vent;
-      datasetdata[day-1] = cant;
+  	  var vent = parseInt(d[1]);
+      datasetdata[day-1] = vent;
     }
   }
 
@@ -146,13 +144,27 @@ function crearDataSetAño(l){
   //alert('creating dataset');
   var aux = JSON.stringify(l);
 
+  aux = aux.substring(1, aux.length-1);
+  var lista = aux.split(",");
+  var datasetdata = [];
+
   for (i=0; i<lista.length; i++) {
-    //TO_DO
+    if (lista[i]) {
+      var d = lista[i].split(":");
+      var month = d[0].substring(1, d[0].length-1);
+      var cant = d[1];
+      if (cant.includes('"')){
+        cant = cant.substring(1, cant.length-1);
+      }
+      var vent = parseInt(cant);
+      datasetdata[month-1] = vent;
+    }
   }
 
   var dataset = {
     label: '',
-    data: datasetdata
+    data: datasetdata,
+    backgroundColor: 'rgba(99, 132, 0, 0.6)'
   };
   return dataset;
 }

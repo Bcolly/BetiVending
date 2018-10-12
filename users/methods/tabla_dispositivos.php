@@ -102,9 +102,16 @@
 		echo "<a href='s_maquina.php?OBJ=$maquina[id]'>$maquina[nombre]</a>";
 		$sql=query("SELECT * FROM v_evento WHERE idmaquina=$maquina[id]", $basededatos, $con);
 		$con++;
-		if ($sql->rowCount() > 0){ ?>
+		$num = $sql->rowCount();
+		if ($num > 0){ ?>
 			<img src='../img/emergency.png' height='20' width='20' alt="<?php echo __('EVENTS', $lang, $pre.'../').': '.$num; ?>" title="<?php echo __('EVENTS', $lang, $pre.'../').': '.$num; ?>"
 			onclick="abrir('s_evento.php?id=<?php echo $maquina['id']; ?>')" />
+		<?php }
+		$sql=query("SELECT * FROM v_seleccion NATURAL JOIN v_productos_seleccion WHERE idmaquina=$maquina[id] AND cantidad < max*0.15", $basededatos, $con);
+		$con++;
+		$num = $sql->rowCount();
+		if ($num > 0){ ?>
+			<img src='../img/emergency_red.png' height='20' width='20' alt="<?php echo __('LOW PROUCTS', $lang, $pre.'../').': '.$num; ?>" title="<?php echo __('LOW PRODUCTS', $lang, $pre.'../').': '.$num; ?>"/>
 		<?php }
 		echo "<br/>";
 	}
